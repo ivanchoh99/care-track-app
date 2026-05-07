@@ -1,0 +1,1510 @@
+.
+├── build
+│   └── reports
+│       ├── configuration-cache
+│       │   ├── 20lu6puxpmi66k4ldtcgw89km
+│       │   │   └── b2x0rcsqh5ajqttb5cf68hzz
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 2fqir9bphz91oyjlo6hc22ele
+│       │   │   ├── 3zx5czqqaiopppzudsgk9dame
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   └── cv804yfq7qzgf7fbh01aadd4p
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 2oeuiod4azyfd4d98be0veniw
+│       │   │   └── dz0zixjs2oyn1q9tqhmuzx85j
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 3urw26c36vpi0icl74ajtb60l
+│       │   │   └── 34nlazvczrj6jsg898sh61mm3
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 3w80lcuzkmk1iabpjne1ns2bf
+│       │   │   ├── 2jd4lj4odqapp6qicjpxuq40a
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   └── dz7c0bug227iya8u42crn7ov5
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 45kog3ywnoiyxqr57qoqvtlst
+│       │   │   └── 2kae05rx89dwpkxs4zsfz7dzs
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 57w9ggqit7icavd4ebhizdp5j
+│       │   │   └── 1fq9l1fa5j18vm3kyrotju91h
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 5g4n21f6qly280o9rloeufz3y
+│       │   │   ├── 70cb708a7c9feclm7j3v3hbse
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   ├── 767iicj5oj1hyb21qj33lepvz
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   ├── 7so8y4uiq18e34wqnk0q8xa56
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   ├── b0dly2dkeg6bkap1nwezrrvkn
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   ├── e69zrq8fn3v4lyqsfrf05xtqq
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   └── efxx6ax2yxhtf7ry0kgwglcp3
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 60nx9o3caelqkvzoya8fu17jm
+│       │   │   └── 1mh2kc8a71ylyk0mj18013kzb
+│       │   │       └── configuration-cache-report.html
+│       │   ├── 9by0j0llttm36tdqzat819vpw
+│       │   │   ├── 6a3rtkfm1rb90r6n1wyffa95h
+│       │   │   │   └── configuration-cache-report.html
+│       │   │   └── 9yry56eb8q562nrjrk4nij83
+│       │   │       └── configuration-cache-report.html
+│       │   └── f4noiykqtym1xwi2xfb5ho0x6
+│       │       ├── 6vt9aznvdb6xa483yphqlluyr
+│       │       │   └── configuration-cache-report.html
+│       │       └── 8ahket59uk6aiosfybqjlga0l
+│       │           └── configuration-cache-report.html
+│       └── problems
+│           └── problems-report.html
+├── build.gradle.kts
+├── composeApp
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── assets
+│   │   │   │   ├── copyDebugAndroidTestComposeResourcesToAndroidAssets
+│   │   │   │   └── copyDebugComposeResourcesToAndroidAssets
+│   │   │   │       └── composeResources
+│   │   │   │           └── caretrack.composeapp.generated.resources
+│   │   │   │               └── drawable
+│   │   │   │                   ├── add_24px.xml
+│   │   │   │                   ├── audio_file_24px.xml
+│   │   │   │                   ├── compose-multiplatform.xml
+│   │   │   │                   ├── image_24px.xml
+│   │   │   │                   ├── mic_24px.xml
+│   │   │   │                   ├── picture_as_pdf_24px.xml
+│   │   │   │                   └── send_24px.xml
+│   │   │   ├── compose
+│   │   │   │   └── resourceGenerator
+│   │   │   │       ├── kotlin
+│   │   │   │       │   ├── androidMainResourceCollectors
+│   │   │   │       │   │   └── caretrack
+│   │   │   │       │   │       └── composeapp
+│   │   │   │       │   │           └── generated
+│   │   │   │       │   │               └── resources
+│   │   │   │       │   │                   └── ActualResourceCollectors.kt
+│   │   │   │       │   ├── commonMainResourceAccessors
+│   │   │   │       │   │   └── caretrack
+│   │   │   │       │   │       └── composeapp
+│   │   │   │       │   │           └── generated
+│   │   │   │       │   │               └── resources
+│   │   │   │       │   │                   └── Drawable0.commonMain.kt
+│   │   │   │       │   ├── commonMainResourceCollectors
+│   │   │   │       │   │   └── caretrack
+│   │   │   │       │   │       └── composeapp
+│   │   │   │       │   │           └── generated
+│   │   │   │       │   │               └── resources
+│   │   │   │       │   │                   └── ExpectResourceCollectors.kt
+│   │   │   │       │   ├── commonResClass
+│   │   │   │       │   │   └── caretrack
+│   │   │   │       │   │       └── composeapp
+│   │   │   │       │   │           └── generated
+│   │   │   │       │   │               └── resources
+│   │   │   │       │   │                   └── Res.kt
+│   │   │   │       │   ├── iosArm64MainResourceCollectors
+│   │   │   │       │   │   └── caretrack
+│   │   │   │       │   │       └── composeapp
+│   │   │   │       │   │           └── generated
+│   │   │   │       │   │               └── resources
+│   │   │   │       │   │                   └── ActualResourceCollectors.kt
+│   │   │   │       │   └── iosSimulatorArm64MainResourceCollectors
+│   │   │   │       │       └── caretrack
+│   │   │   │       │           └── composeapp
+│   │   │   │       │               └── generated
+│   │   │   │       │                   └── resources
+│   │   │   │       │                       └── ActualResourceCollectors.kt
+│   │   │   │       └── preparedResources
+│   │   │   │           └── commonMain
+│   │   │   │               └── composeResources
+│   │   │   │                   └── drawable
+│   │   │   │                       ├── add_24px.xml
+│   │   │   │                       ├── audio_file_24px.xml
+│   │   │   │                       ├── compose-multiplatform.xml
+│   │   │   │                       ├── image_24px.xml
+│   │   │   │                       ├── mic_24px.xml
+│   │   │   │                       ├── picture_as_pdf_24px.xml
+│   │   │   │                       └── send_24px.xml
+│   │   │   ├── res
+│   │   │   │   ├── pngs
+│   │   │   │   │   └── debug
+│   │   │   │   └── resValues
+│   │   │   │       ├── androidTest
+│   │   │   │       │   └── debug
+│   │   │   │       └── debug
+│   │   │   └── updated_navigation_xml
+│   │   │       ├── debug
+│   │   │       └── debugAndroidTest
+│   │   ├── intermediates
+│   │   │   ├── aar_metadata_check
+│   │   │   │   ├── debug
+│   │   │   │   │   └── checkDebugAarMetadata
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── checkDebugAndroidTestAarMetadata
+│   │   │   ├── android_res_source_set_path_map
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mapDebugSourceSetPaths
+│   │   │   │   │       └── file-map.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mapDebugAndroidTestSourceSetPaths
+│   │   │   │           └── file-map.txt
+│   │   │   ├── annotation_processor_list
+│   │   │   │   ├── debug
+│   │   │   │   │   └── javaPreCompileDebug
+│   │   │   │   │       └── annotationProcessors.json
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── javaPreCompileDebugAndroidTest
+│   │   │   │           └── annotationProcessors.json
+│   │   │   ├── apk
+│   │   │   │   ├── androidTest
+│   │   │   │   │   └── debug
+│   │   │   │   │       ├── composeApp-debug-androidTest.apk
+│   │   │   │   │       └── output-metadata.json
+│   │   │   │   └── debug
+│   │   │   │       ├── composeApp-debug.apk
+│   │   │   │       └── output-metadata.json
+│   │   │   ├── apk_ide_redirect_file
+│   │   │   │   ├── debug
+│   │   │   │   │   └── createDebugApkListingFileRedirect
+│   │   │   │   │       └── redirect.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── createDebugAndroidTestApkListingFileRedirect
+│   │   │   │           └── redirect.txt
+│   │   │   ├── app_metadata
+│   │   │   │   └── debug
+│   │   │   │       └── writeDebugAppMetadata
+│   │   │   │           └── app-metadata.properties
+│   │   │   ├── assets
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugAssets
+│   │   │   │   │       └── composeResources
+│   │   │   │   │           └── caretrack.composeapp.generated.resources
+│   │   │   │   │               └── drawable
+│   │   │   │   │                   ├── add_24px.xml
+│   │   │   │   │                   ├── audio_file_24px.xml
+│   │   │   │   │                   ├── compose-multiplatform.xml
+│   │   │   │   │                   ├── image_24px.xml
+│   │   │   │   │                   ├── mic_24px.xml
+│   │   │   │   │                   ├── picture_as_pdf_24px.xml
+│   │   │   │   │                   └── send_24px.xml
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestAssets
+│   │   │   ├── compatible_screen_manifest
+│   │   │   │   └── debug
+│   │   │   │       └── createDebugCompatibleScreenManifests
+│   │   │   │           └── output-metadata.json
+│   │   │   ├── compile_and_runtime_r_class_jar
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugResources
+│   │   │   │   │       └── R.jar
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestResources
+│   │   │   │           └── R.jar
+│   │   │   ├── compile_app_classes_jar
+│   │   │   │   └── debug
+│   │   │   │       └── bundleDebugClassesToCompileJar
+│   │   │   │           └── classes.jar
+│   │   │   ├── compiled_navigation_res
+│   │   │   │   ├── debug
+│   │   │   │   │   └── compileDebugNavigationResources
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── compileDebugAndroidTestNavigationResources
+│   │   │   ├── compressed_assets
+│   │   │   │   ├── debug
+│   │   │   │   │   └── compressDebugAssets
+│   │   │   │   │       └── out
+│   │   │   │   │           └── assets
+│   │   │   │   │               └── composeResources
+│   │   │   │   │                   └── caretrack.composeapp.generated.resources
+│   │   │   │   │                       └── drawable
+│   │   │   │   │                           ├── add_24px.xml.jar
+│   │   │   │   │                           ├── audio_file_24px.xml.jar
+│   │   │   │   │                           ├── compose-multiplatform.xml.jar
+│   │   │   │   │                           ├── image_24px.xml.jar
+│   │   │   │   │                           ├── mic_24px.xml.jar
+│   │   │   │   │                           ├── picture_as_pdf_24px.xml.jar
+│   │   │   │   │                           └── send_24px.xml.jar
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── compressDebugAndroidTestAssets
+│   │   │   │           └── out
+│   │   │   ├── data_binding_layout_info_type_merge
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugResources
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestResources
+│   │   │   │           └── out
+│   │   │   ├── data_binding_layout_info_type_package
+│   │   │   │   └── debug
+│   │   │   │       └── packageDebugResources
+│   │   │   │           └── out
+│   │   │   ├── desugar_graph
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   │           ├── currentProject
+│   │   │   │   │           │   ├── dirs_bucket_0
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_1
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_2
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_3
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── jar_30df6ec07a9631cfc37d047dba331854c20c2d3464c5a9692f451bf4e1368152_bucket_0
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── jar_30df6ec07a9631cfc37d047dba331854c20c2d3464c5a9692f451bf4e1368152_bucket_1
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── jar_30df6ec07a9631cfc37d047dba331854c20c2d3464c5a9692f451bf4e1368152_bucket_2
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   └── jar_30df6ec07a9631cfc37d047dba331854c20c2d3464c5a9692f451bf4e1368152_bucket_3
+│   │   │   │   │           │       └── graph.bin
+│   │   │   │   │           ├── externalLibs
+│   │   │   │   │           │   ├── dirs_bucket_0
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_1
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_2
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   └── dirs_bucket_3
+│   │   │   │   │           │       └── graph.bin
+│   │   │   │   │           ├── mixedScopes
+│   │   │   │   │           │   ├── dirs_bucket_0
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_1
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   ├── dirs_bucket_2
+│   │   │   │   │           │   │   └── graph.bin
+│   │   │   │   │           │   └── dirs_bucket_3
+│   │   │   │   │           │       └── graph.bin
+│   │   │   │   │           └── otherProjects
+│   │   │   │   │               ├── dirs_bucket_0
+│   │   │   │   │               │   └── graph.bin
+│   │   │   │   │               ├── dirs_bucket_1
+│   │   │   │   │               │   └── graph.bin
+│   │   │   │   │               ├── dirs_bucket_2
+│   │   │   │   │               │   └── graph.bin
+│   │   │   │   │               └── dirs_bucket_3
+│   │   │   │   │                   └── graph.bin
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   │               ├── currentProject
+│   │   │   │               │   ├── dirs_bucket_0
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_1
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_2
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_3
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── jar_0451cdb081c1993f770b73912f6ab499c98fcb03fe97cbc4bd4bf56b95c2d8f6_bucket_0
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── jar_0451cdb081c1993f770b73912f6ab499c98fcb03fe97cbc4bd4bf56b95c2d8f6_bucket_1
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── jar_0451cdb081c1993f770b73912f6ab499c98fcb03fe97cbc4bd4bf56b95c2d8f6_bucket_2
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   └── jar_0451cdb081c1993f770b73912f6ab499c98fcb03fe97cbc4bd4bf56b95c2d8f6_bucket_3
+│   │   │   │               │       └── graph.bin
+│   │   │   │               ├── externalLibs
+│   │   │   │               │   ├── dirs_bucket_0
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_1
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_2
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   └── dirs_bucket_3
+│   │   │   │               │       └── graph.bin
+│   │   │   │               ├── mixedScopes
+│   │   │   │               │   ├── dirs_bucket_0
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_1
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   ├── dirs_bucket_2
+│   │   │   │               │   │   └── graph.bin
+│   │   │   │               │   └── dirs_bucket_3
+│   │   │   │               │       └── graph.bin
+│   │   │   │               └── otherProjects
+│   │   │   │                   ├── dirs_bucket_0
+│   │   │   │                   │   └── graph.bin
+│   │   │   │                   ├── dirs_bucket_1
+│   │   │   │                   │   └── graph.bin
+│   │   │   │                   ├── dirs_bucket_2
+│   │   │   │                   │   └── graph.bin
+│   │   │   │                   └── dirs_bucket_3
+│   │   │   │                       └── graph.bin
+│   │   │   ├── dex
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── mergeExtDexDebug
+│   │   │   │   │   │   ├── classes2.dex
+│   │   │   │   │   │   └── classes.dex
+│   │   │   │   │   ├── mergeLibDexDebug
+│   │   │   │   │   │   ├── 0
+│   │   │   │   │   │   ├── 1
+│   │   │   │   │   │   ├── 10
+│   │   │   │   │   │   ├── 11
+│   │   │   │   │   │   ├── 12
+│   │   │   │   │   │   ├── 13
+│   │   │   │   │   │   ├── 14
+│   │   │   │   │   │   ├── 15
+│   │   │   │   │   │   ├── 2
+│   │   │   │   │   │   ├── 3
+│   │   │   │   │   │   ├── 4
+│   │   │   │   │   │   ├── 5
+│   │   │   │   │   │   ├── 6
+│   │   │   │   │   │   ├── 7
+│   │   │   │   │   │   ├── 8
+│   │   │   │   │   │   └── 9
+│   │   │   │   │   └── mergeProjectDexDebug
+│   │   │   │   │       ├── 0
+│   │   │   │   │       │   └── classes.dex
+│   │   │   │   │       ├── 1
+│   │   │   │   │       ├── 10
+│   │   │   │   │       ├── 11
+│   │   │   │   │       ├── 12
+│   │   │   │   │       ├── 13
+│   │   │   │   │       │   └── classes.dex
+│   │   │   │   │       ├── 14
+│   │   │   │   │       ├── 15
+│   │   │   │   │       ├── 2
+│   │   │   │   │       ├── 3
+│   │   │   │   │       ├── 4
+│   │   │   │   │       ├── 5
+│   │   │   │   │       │   └── classes.dex
+│   │   │   │   │       ├── 6
+│   │   │   │   │       ├── 7
+│   │   │   │   │       ├── 8
+│   │   │   │   │       └── 9
+│   │   │   │   │           └── classes.dex
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       ├── mergeExtDexDebugAndroidTest
+│   │   │   │       ├── mergeLibDexDebugAndroidTest
+│   │   │   │       │   ├── 0
+│   │   │   │       │   ├── 1
+│   │   │   │       │   ├── 10
+│   │   │   │       │   ├── 11
+│   │   │   │       │   ├── 12
+│   │   │   │       │   ├── 13
+│   │   │   │       │   ├── 14
+│   │   │   │       │   ├── 15
+│   │   │   │       │   ├── 2
+│   │   │   │       │   ├── 3
+│   │   │   │       │   ├── 4
+│   │   │   │       │   ├── 5
+│   │   │   │       │   ├── 6
+│   │   │   │       │   ├── 7
+│   │   │   │       │   ├── 8
+│   │   │   │       │   └── 9
+│   │   │   │       └── mergeProjectDexDebugAndroidTest
+│   │   │   │           ├── 0
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 1
+│   │   │   │           ├── 10
+│   │   │   │           ├── 11
+│   │   │   │           ├── 12
+│   │   │   │           ├── 13
+│   │   │   │           ├── 14
+│   │   │   │           ├── 15
+│   │   │   │           ├── 2
+│   │   │   │           ├── 3
+│   │   │   │           ├── 4
+│   │   │   │           ├── 5
+│   │   │   │           ├── 6
+│   │   │   │           ├── 7
+│   │   │   │           ├── 8
+│   │   │   │           └── 9
+│   │   │   ├── dex_archive_input_jar_hashes
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── dex_number_of_buckets_file
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── duplicate_classes_check
+│   │   │   │   ├── debug
+│   │   │   │   │   └── checkDebugDuplicateClasses
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── checkDebugAndroidTestDuplicateClasses
+│   │   │   ├── external_file_lib_dex_archives
+│   │   │   │   ├── debug
+│   │   │   │   │   └── desugarDebugFileDependencies
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── desugarDebugAndroidTestFileDependencies
+│   │   │   ├── external_libs_dex_archive
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── external_libs_dex_archive_with_artifact_transforms
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── global_synthetics_dex
+│   │   │   │   ├── debug
+│   │   │   │   │   └── generateDebugGlobalSynthetics
+│   │   │   │   │       └── classes.dex
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── generateDebugAndroidTestGlobalSynthetics
+│   │   │   │           └── classes.dex
+│   │   │   ├── global_synthetics_external_lib
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── global_synthetics_external_libs_artifact_transform
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── global_synthetics_file_lib
+│   │   │   │   ├── debug
+│   │   │   │   │   └── desugarDebugFileDependencies
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── desugarDebugAndroidTestFileDependencies
+│   │   │   ├── global_synthetics_mixed_scope
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── global_synthetics_project
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── global_synthetics_subproject
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── incremental
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── mergeDebugResources
+│   │   │   │   │   │   ├── compile-file-map.properties
+│   │   │   │   │   │   ├── merged.dir
+│   │   │   │   │   │   │   ├── values
+│   │   │   │   │   │   │   │   └── values.xml
+│   │   │   │   │   │   │   ├── values-af
+│   │   │   │   │   │   │   │   └── values-af.xml
+│   │   │   │   │   │   │   ├── values-am
+│   │   │   │   │   │   │   │   └── values-am.xml
+│   │   │   │   │   │   │   ├── values-ar
+│   │   │   │   │   │   │   │   └── values-ar.xml
+│   │   │   │   │   │   │   ├── values-as
+│   │   │   │   │   │   │   │   └── values-as.xml
+│   │   │   │   │   │   │   ├── values-az
+│   │   │   │   │   │   │   │   └── values-az.xml
+│   │   │   │   │   │   │   ├── values-be
+│   │   │   │   │   │   │   │   └── values-be.xml
+│   │   │   │   │   │   │   ├── values-bg
+│   │   │   │   │   │   │   │   └── values-bg.xml
+│   │   │   │   │   │   │   ├── values-bn
+│   │   │   │   │   │   │   │   └── values-bn.xml
+│   │   │   │   │   │   │   ├── values-bs
+│   │   │   │   │   │   │   │   └── values-bs.xml
+│   │   │   │   │   │   │   ├── values-b+sr+Latn
+│   │   │   │   │   │   │   │   └── values-b+sr+Latn.xml
+│   │   │   │   │   │   │   ├── values-ca
+│   │   │   │   │   │   │   │   └── values-ca.xml
+│   │   │   │   │   │   │   ├── values-cs
+│   │   │   │   │   │   │   │   └── values-cs.xml
+│   │   │   │   │   │   │   ├── values-da
+│   │   │   │   │   │   │   │   └── values-da.xml
+│   │   │   │   │   │   │   ├── values-de
+│   │   │   │   │   │   │   │   └── values-de.xml
+│   │   │   │   │   │   │   ├── values-el
+│   │   │   │   │   │   │   │   └── values-el.xml
+│   │   │   │   │   │   │   ├── values-en-rAU
+│   │   │   │   │   │   │   │   └── values-en-rAU.xml
+│   │   │   │   │   │   │   ├── values-en-rCA
+│   │   │   │   │   │   │   │   └── values-en-rCA.xml
+│   │   │   │   │   │   │   ├── values-en-rGB
+│   │   │   │   │   │   │   │   └── values-en-rGB.xml
+│   │   │   │   │   │   │   ├── values-en-rIN
+│   │   │   │   │   │   │   │   └── values-en-rIN.xml
+│   │   │   │   │   │   │   ├── values-en-rXC
+│   │   │   │   │   │   │   │   └── values-en-rXC.xml
+│   │   │   │   │   │   │   ├── values-es
+│   │   │   │   │   │   │   │   └── values-es.xml
+│   │   │   │   │   │   │   ├── values-es-rUS
+│   │   │   │   │   │   │   │   └── values-es-rUS.xml
+│   │   │   │   │   │   │   ├── values-et
+│   │   │   │   │   │   │   │   └── values-et.xml
+│   │   │   │   │   │   │   ├── values-eu
+│   │   │   │   │   │   │   │   └── values-eu.xml
+│   │   │   │   │   │   │   ├── values-fa
+│   │   │   │   │   │   │   │   └── values-fa.xml
+│   │   │   │   │   │   │   ├── values-fi
+│   │   │   │   │   │   │   │   └── values-fi.xml
+│   │   │   │   │   │   │   ├── values-fr
+│   │   │   │   │   │   │   │   └── values-fr.xml
+│   │   │   │   │   │   │   ├── values-fr-rCA
+│   │   │   │   │   │   │   │   └── values-fr-rCA.xml
+│   │   │   │   │   │   │   ├── values-gl
+│   │   │   │   │   │   │   │   └── values-gl.xml
+│   │   │   │   │   │   │   ├── values-gu
+│   │   │   │   │   │   │   │   └── values-gu.xml
+│   │   │   │   │   │   │   ├── values-hi
+│   │   │   │   │   │   │   │   └── values-hi.xml
+│   │   │   │   │   │   │   ├── values-hr
+│   │   │   │   │   │   │   │   └── values-hr.xml
+│   │   │   │   │   │   │   ├── values-hu
+│   │   │   │   │   │   │   │   └── values-hu.xml
+│   │   │   │   │   │   │   ├── values-hy
+│   │   │   │   │   │   │   │   └── values-hy.xml
+│   │   │   │   │   │   │   ├── values-in
+│   │   │   │   │   │   │   │   └── values-in.xml
+│   │   │   │   │   │   │   ├── values-is
+│   │   │   │   │   │   │   │   └── values-is.xml
+│   │   │   │   │   │   │   ├── values-it
+│   │   │   │   │   │   │   │   └── values-it.xml
+│   │   │   │   │   │   │   ├── values-iw
+│   │   │   │   │   │   │   │   └── values-iw.xml
+│   │   │   │   │   │   │   ├── values-ja
+│   │   │   │   │   │   │   │   └── values-ja.xml
+│   │   │   │   │   │   │   ├── values-ka
+│   │   │   │   │   │   │   │   └── values-ka.xml
+│   │   │   │   │   │   │   ├── values-kk
+│   │   │   │   │   │   │   │   └── values-kk.xml
+│   │   │   │   │   │   │   ├── values-km
+│   │   │   │   │   │   │   │   └── values-km.xml
+│   │   │   │   │   │   │   ├── values-kn
+│   │   │   │   │   │   │   │   └── values-kn.xml
+│   │   │   │   │   │   │   ├── values-ko
+│   │   │   │   │   │   │   │   └── values-ko.xml
+│   │   │   │   │   │   │   ├── values-ky
+│   │   │   │   │   │   │   │   └── values-ky.xml
+│   │   │   │   │   │   │   ├── values-lo
+│   │   │   │   │   │   │   │   └── values-lo.xml
+│   │   │   │   │   │   │   ├── values-lt
+│   │   │   │   │   │   │   │   └── values-lt.xml
+│   │   │   │   │   │   │   ├── values-lv
+│   │   │   │   │   │   │   │   └── values-lv.xml
+│   │   │   │   │   │   │   ├── values-mk
+│   │   │   │   │   │   │   │   └── values-mk.xml
+│   │   │   │   │   │   │   ├── values-ml
+│   │   │   │   │   │   │   │   └── values-ml.xml
+│   │   │   │   │   │   │   ├── values-mn
+│   │   │   │   │   │   │   │   └── values-mn.xml
+│   │   │   │   │   │   │   ├── values-mr
+│   │   │   │   │   │   │   │   └── values-mr.xml
+│   │   │   │   │   │   │   ├── values-ms
+│   │   │   │   │   │   │   │   └── values-ms.xml
+│   │   │   │   │   │   │   ├── values-my
+│   │   │   │   │   │   │   │   └── values-my.xml
+│   │   │   │   │   │   │   ├── values-nb
+│   │   │   │   │   │   │   │   └── values-nb.xml
+│   │   │   │   │   │   │   ├── values-ne
+│   │   │   │   │   │   │   │   └── values-ne.xml
+│   │   │   │   │   │   │   ├── values-nl
+│   │   │   │   │   │   │   │   └── values-nl.xml
+│   │   │   │   │   │   │   ├── values-or
+│   │   │   │   │   │   │   │   └── values-or.xml
+│   │   │   │   │   │   │   ├── values-pa
+│   │   │   │   │   │   │   │   └── values-pa.xml
+│   │   │   │   │   │   │   ├── values-pl
+│   │   │   │   │   │   │   │   └── values-pl.xml
+│   │   │   │   │   │   │   ├── values-pt
+│   │   │   │   │   │   │   │   └── values-pt.xml
+│   │   │   │   │   │   │   ├── values-pt-rBR
+│   │   │   │   │   │   │   │   └── values-pt-rBR.xml
+│   │   │   │   │   │   │   ├── values-pt-rPT
+│   │   │   │   │   │   │   │   └── values-pt-rPT.xml
+│   │   │   │   │   │   │   ├── values-ro
+│   │   │   │   │   │   │   │   └── values-ro.xml
+│   │   │   │   │   │   │   ├── values-ru
+│   │   │   │   │   │   │   │   └── values-ru.xml
+│   │   │   │   │   │   │   ├── values-si
+│   │   │   │   │   │   │   │   └── values-si.xml
+│   │   │   │   │   │   │   ├── values-sk
+│   │   │   │   │   │   │   │   └── values-sk.xml
+│   │   │   │   │   │   │   ├── values-sl
+│   │   │   │   │   │   │   │   └── values-sl.xml
+│   │   │   │   │   │   │   ├── values-sq
+│   │   │   │   │   │   │   │   └── values-sq.xml
+│   │   │   │   │   │   │   ├── values-sr
+│   │   │   │   │   │   │   │   └── values-sr.xml
+│   │   │   │   │   │   │   ├── values-sv
+│   │   │   │   │   │   │   │   └── values-sv.xml
+│   │   │   │   │   │   │   ├── values-sw
+│   │   │   │   │   │   │   │   └── values-sw.xml
+│   │   │   │   │   │   │   ├── values-ta
+│   │   │   │   │   │   │   │   └── values-ta.xml
+│   │   │   │   │   │   │   ├── values-te
+│   │   │   │   │   │   │   │   └── values-te.xml
+│   │   │   │   │   │   │   ├── values-th
+│   │   │   │   │   │   │   │   └── values-th.xml
+│   │   │   │   │   │   │   ├── values-tl
+│   │   │   │   │   │   │   │   └── values-tl.xml
+│   │   │   │   │   │   │   ├── values-tr
+│   │   │   │   │   │   │   │   └── values-tr.xml
+│   │   │   │   │   │   │   ├── values-uk
+│   │   │   │   │   │   │   │   └── values-uk.xml
+│   │   │   │   │   │   │   ├── values-ur
+│   │   │   │   │   │   │   │   └── values-ur.xml
+│   │   │   │   │   │   │   ├── values-uz
+│   │   │   │   │   │   │   │   └── values-uz.xml
+│   │   │   │   │   │   │   ├── values-v30
+│   │   │   │   │   │   │   │   └── values-v30.xml
+│   │   │   │   │   │   │   ├── values-vi
+│   │   │   │   │   │   │   │   └── values-vi.xml
+│   │   │   │   │   │   │   ├── values-zh-rCN
+│   │   │   │   │   │   │   │   └── values-zh-rCN.xml
+│   │   │   │   │   │   │   ├── values-zh-rHK
+│   │   │   │   │   │   │   │   └── values-zh-rHK.xml
+│   │   │   │   │   │   │   ├── values-zh-rTW
+│   │   │   │   │   │   │   │   └── values-zh-rTW.xml
+│   │   │   │   │   │   │   └── values-zu
+│   │   │   │   │   │   │       └── values-zu.xml
+│   │   │   │   │   │   ├── merger.xml
+│   │   │   │   │   │   └── stripped.dir
+│   │   │   │   │   └── packageDebugResources
+│   │   │   │   │       ├── compile-file-map.properties
+│   │   │   │   │       ├── merged.dir
+│   │   │   │   │       │   └── values
+│   │   │   │   │       │       └── values.xml
+│   │   │   │   │       ├── merger.xml
+│   │   │   │   │       └── stripped.dir
+│   │   │   │   ├── debugAndroidTest
+│   │   │   │   │   └── mergeDebugAndroidTestResources
+│   │   │   │   │       ├── compile-file-map.properties
+│   │   │   │   │       ├── merged.dir
+│   │   │   │   │       ├── merger.xml
+│   │   │   │   │       └── stripped.dir
+│   │   │   │   ├── debugAndroidTest-mergeJavaRes
+│   │   │   │   │   ├── merge-state
+│   │   │   │   │   └── zip-cache
+│   │   │   │   ├── debug-mergeJavaRes
+│   │   │   │   │   ├── merge-state
+│   │   │   │   │   └── zip-cache
+│   │   │   │   │       ├── 0qusfx88eksZBzpq86g__Q==
+│   │   │   │   │       ├── 1N9CR49Ip4MTZlFK+VUQAg==
+│   │   │   │   │       ├── 1UYeZ8tMU5uYVFmSrZfUTw==
+│   │   │   │   │       ├── 2CBmssruyH1p4osJssBGBQ==
+│   │   │   │   │       ├── 46SAFz4eJb_SKQxhPgjiCw==
+│   │   │   │   │       ├── 6GTvlwyTNrw+Dk8ZCBIOKA==
+│   │   │   │   │       ├── 73JDGiwbIMAF4fUX3cTLEA==
+│   │   │   │   │       ├── 7PjW3X6RZ_1DCHDKDxeWag==
+│   │   │   │   │       ├── 8Nmg1EnN5mkXPLL0LJq12A==
+│   │   │   │   │       ├── 8P8CzOl+_z1N0IAariFZdw==
+│   │   │   │   │       ├── 9bMIBUk36LP2k_GzR1aUnQ==
+│   │   │   │   │       ├── 9WxdB53cDQCM66m4EmvBIQ==
+│   │   │   │   │       ├── +ba1yo+gGaWySIu4rWgaFQ==
+│   │   │   │   │       ├── bdOfuyK8xOCn9ZReEYtt+w==
+│   │   │   │   │       ├── Bgoo7vNmw88ru2SHoxOtCA==
+│   │   │   │   │       ├── BiP8_K19OWeh_vEc8niYbQ==
+│   │   │   │   │       ├── BLvJMu3CUrHkyZB98cJmUg==
+│   │   │   │   │       ├── b+xSzTrPQLxQEwjIkk85Sg==
+│   │   │   │   │       ├── CBWt_UVZs9447ReUD3No5g==
+│   │   │   │   │       ├── co4cY8OZ0QE2zUjSjKTgwQ==
+│   │   │   │   │       ├── Cx3YgCZJgM9DZr8Y+haEWw==
+│   │   │   │   │       ├── DEL2fPQUW1V_gBKlsMgJmw==
+│   │   │   │   │       ├── _Dhhac26Hvo6MvNTdS5Z8w==
+│   │   │   │   │       ├── dl2F0Fs510Pup6sNabekZA==
+│   │   │   │   │       ├── Dn3UXpJwLITECuxA4XBLhQ==
+│   │   │   │   │       ├── ds9GGFPcMO0DF3WkuyDuIg==
+│   │   │   │   │       ├── DtjIjZN5tYMLfxH2mws1YQ==
+│   │   │   │   │       ├── Dv9Rq9kC3ih+ZHjitD1GPQ==
+│   │   │   │   │       ├── E8KTI1gSHLgWUihJsCPyDQ==
+│   │   │   │   │       ├── esNocj13s1ZzoSWz5QDriA==
+│   │   │   │   │       ├── EtruvUfCGmS_+F7fw84BZw==
+│   │   │   │   │       ├── f_4V6Cot6ncNVWzs03khoQ==
+│   │   │   │   │       ├── f+8HGvvsibkqtatfTQvOpQ==
+│   │   │   │   │       ├── fDyWG+mMFVc3jwGiG32SYg==
+│   │   │   │   │       ├── f_GdB0XSHWsGHTgK_YMzDQ==
+│   │   │   │   │       ├── FhocnzR_cebHeH4_kYtKJg==
+│   │   │   │   │       ├── fNMyHJ8tHkdbozKNP1XSNA==
+│   │   │   │   │       ├── fQXSyaysIc_LweUmAaZsyQ==
+│   │   │   │   │       ├── FvEHm+BK8p23VAvQpTvaOA==
+│   │   │   │   │       ├── fZeLkd6lbHrD90WMMeNE6w==
+│   │   │   │   │       ├── G0fYQ+QzQVLaeO4pNbhnBQ==
+│   │   │   │   │       ├── GgwYFsf7849SN70cnkYaug==
+│   │   │   │   │       ├── HfmQC9EyPu3sDKixShcVyQ==
+│   │   │   │   │       ├── i0mmfdvQTNP4YVLJZXsH_Q==
+│   │   │   │   │       ├── iBLm6+Yz8jxb3Fotd5dXUw==
+│   │   │   │   │       ├── j5lOMSIc47EZJ5xEFEyYlA==
+│   │   │   │   │       ├── JDwS5tdH3lM2O+wRPkRKIA==
+│   │   │   │   │       ├── KY16YkA_nno1WDi6Vcmo7w==
+│   │   │   │   │       ├── L2Msm5tgg2eljSaJFOtBCQ==
+│   │   │   │   │       ├── L4akZZy3L9xTh+a6y1ELkg==
+│   │   │   │   │       ├── lcEwqf9g4JNrFcxMPZhD2Q==
+│   │   │   │   │       ├── LmI7e9s2PBU+pjfS+qug3Q==
+│   │   │   │   │       ├── LpGkjwM5Vu7YY14cO63nrA==
+│   │   │   │   │       ├── LywBiZczSWG5+eP6vUW2Tw==
+│   │   │   │   │       ├── MJbtpprNY_OA9qNaCP5jTw==
+│   │   │   │   │       ├── mXN21wQtEcoaCQ+qmPBRYQ==
+│   │   │   │   │       ├── n7BwC4zQKLyCv9MPApWm7Q==
+│   │   │   │   │       ├── NBcQx1uu7SGwsc3h+WodQw==
+│   │   │   │   │       ├── +nbCsg1qBaZ0Ywi29RXmVg==
+│   │   │   │   │       ├── ++peNVX5s9JDXWd6E8gJ6Q==
+│   │   │   │   │       ├── QUO1tUPR3ndjEiZNfwb0Ng==
+│   │   │   │   │       ├── rv+HkreS57PUTZcfg+0HUQ==
+│   │   │   │   │       ├── SCfuBlA8gjeSlEJoIkzBRg==
+│   │   │   │   │       ├── slcs+oZNDZfw5jSenMuZ8w==
+│   │   │   │   │       ├── TcXrRRRwvUS8HACNVp0nkA==
+│   │   │   │   │       ├── TQOmMSBAWu0J0PuoAjVM2A==
+│   │   │   │   │       ├── uuwUiVJB+k69QMk5LWODUQ==
+│   │   │   │   │       ├── UUx5azHzFPO4d7JlVPegOw==
+│   │   │   │   │       ├── VdOk16d6DvOMC0QQt6l5xw==
+│   │   │   │   │       ├── vgGq44PglvaYCEYarBJOMg==
+│   │   │   │   │       ├── VhHKH1JTePPuPKYVD6sk+w==
+│   │   │   │   │       ├── VqCOzF7ys5HDMuHRzGViug==
+│   │   │   │   │       ├── w8GihphZzzPvR7nq42U+5g==
+│   │   │   │   │       ├── W9lmONgW9tUQMsn+fSRZjA==
+│   │   │   │   │       ├── WAwa25DHCTClakrkb42aCQ==
+│   │   │   │   │       ├── x8kcMfSZ8CkQY8319c86XQ==
+│   │   │   │   │       ├── ydsByiWbiOHPA_B+apTx4w==
+│   │   │   │   │       ├── YM93fkt_8fFVJQqjOQq8Xg==
+│   │   │   │   │       ├── zkb6GDyUd7SRBouH24Sfig==
+│   │   │   │   │       ├── zL755Cb_5y_Gaax8nBq3CQ==
+│   │   │   │   │       ├── ZLdwG49zx4wOJX19KobyTA==
+│   │   │   │   │       └── zoO8nMpjjbxo75PRJKFqkA==
+│   │   │   │   ├── mergeDebugAndroidTestAssets
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── mergeDebugAndroidTestJniLibFolders
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── mergeDebugAssets
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── mergeDebugJniLibFolders
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── packageDebug
+│   │   │   │   │   └── tmp
+│   │   │   │   │       └── debug
+│   │   │   │   │           ├── dex-renamer-state.txt
+│   │   │   │   │           └── zip-cache
+│   │   │   │   │               ├── androidResources
+│   │   │   │   │               └── javaResources0
+│   │   │   │   └── packageDebugAndroidTest
+│   │   │   │       └── tmp
+│   │   │   │           └── debugAndroidTest
+│   │   │   │               ├── dex-renamer-state.txt
+│   │   │   │               └── zip-cache
+│   │   │   │                   ├── androidResources
+│   │   │   │                   └── javaResources0
+│   │   │   ├── java_res
+│   │   │   │   └── debug
+│   │   │   │       └── processDebugJavaRes
+│   │   │   │           └── out
+│   │   │   │               ├── caretrack
+│   │   │   │               │   └── composeapp
+│   │   │   │               │       └── generated
+│   │   │   │               │           └── resources
+│   │   │   │               ├── com
+│   │   │   │               │   └── app
+│   │   │   │               │       └── caretrack
+│   │   │   │               │           └── chat
+│   │   │   │               └── META-INF
+│   │   │   │                   └── composeApp_debug.kotlin_module
+│   │   │   ├── linked_resources_binary_format
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugResources
+│   │   │   │   │       ├── linked-resources-binary-format-debug.ap_
+│   │   │   │   │       └── output-metadata.json
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestResources
+│   │   │   │           ├── linked-resources-binary-format.ap_
+│   │   │   │           └── output-metadata.json
+│   │   │   ├── local_only_symbol_list
+│   │   │   │   └── debug
+│   │   │   │       └── parseDebugLocalResources
+│   │   │   │           └── R-def.txt
+│   │   │   ├── manifest_merge_blame_file
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugMainManifest
+│   │   │   │   │       └── manifest-merger-blame-debug-report.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestManifest
+│   │   │   │           └── manifest-merger-blame-debug-androidTest-report.txt
+│   │   │   ├── merged_java_res
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugJavaResource
+│   │   │   │   │       └── base.jar
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestJavaResource
+│   │   │   │           └── feature-composeApp.jar
+│   │   │   ├── merged_jni_libs
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugJniLibFolders
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestJniLibFolders
+│   │   │   │           └── out
+│   │   │   ├── merged_manifest
+│   │   │   │   └── debug
+│   │   │   │       └── processDebugMainManifest
+│   │   │   │           └── AndroidManifest.xml
+│   │   │   ├── merged_manifests
+│   │   │   │   └── debug
+│   │   │   │       └── processDebugManifest
+│   │   │   │           ├── AndroidManifest.xml
+│   │   │   │           └── output-metadata.json
+│   │   │   ├── merged_native_libs
+│   │   │   │   └── debug
+│   │   │   │       └── mergeDebugNativeLibs
+│   │   │   │           └── out
+│   │   │   │               └── lib
+│   │   │   │                   ├── arm64-v8a
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   ├── armeabi-v7a
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   ├── x86
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   └── x86_64
+│   │   │   │                       └── libandroidx.graphics.path.so
+│   │   │   ├── merged_res
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugResources
+│   │   │   │   │       ├── drawable_ic_launcher_background.xml.flat
+│   │   │   │   │       ├── drawable-v24_ic_launcher_foreground.xml.flat
+│   │   │   │   │       ├── mipmap-anydpi-v26_ic_launcher_round.xml.flat
+│   │   │   │   │       ├── mipmap-anydpi-v26_ic_launcher.xml.flat
+│   │   │   │   │       ├── mipmap-hdpi_ic_launcher.png.flat
+│   │   │   │   │       ├── mipmap-hdpi_ic_launcher_round.png.flat
+│   │   │   │   │       ├── mipmap-mdpi_ic_launcher.png.flat
+│   │   │   │   │       ├── mipmap-mdpi_ic_launcher_round.png.flat
+│   │   │   │   │       ├── mipmap-xhdpi_ic_launcher.png.flat
+│   │   │   │   │       ├── mipmap-xhdpi_ic_launcher_round.png.flat
+│   │   │   │   │       ├── mipmap-xxhdpi_ic_launcher.png.flat
+│   │   │   │   │       ├── mipmap-xxhdpi_ic_launcher_round.png.flat
+│   │   │   │   │       ├── mipmap-xxxhdpi_ic_launcher.png.flat
+│   │   │   │   │       ├── mipmap-xxxhdpi_ic_launcher_round.png.flat
+│   │   │   │   │       ├── values-af_values-af.arsc.flat
+│   │   │   │   │       ├── values-am_values-am.arsc.flat
+│   │   │   │   │       ├── values-ar_values-ar.arsc.flat
+│   │   │   │   │       ├── values-as_values-as.arsc.flat
+│   │   │   │   │       ├── values-az_values-az.arsc.flat
+│   │   │   │   │       ├── values-be_values-be.arsc.flat
+│   │   │   │   │       ├── values-bg_values-bg.arsc.flat
+│   │   │   │   │       ├── values-bn_values-bn.arsc.flat
+│   │   │   │   │       ├── values-b+sr+Latn_values-b+sr+Latn.arsc.flat
+│   │   │   │   │       ├── values-bs_values-bs.arsc.flat
+│   │   │   │   │       ├── values-ca_values-ca.arsc.flat
+│   │   │   │   │       ├── values-cs_values-cs.arsc.flat
+│   │   │   │   │       ├── values-da_values-da.arsc.flat
+│   │   │   │   │       ├── values-de_values-de.arsc.flat
+│   │   │   │   │       ├── values-el_values-el.arsc.flat
+│   │   │   │   │       ├── values-en-rAU_values-en-rAU.arsc.flat
+│   │   │   │   │       ├── values-en-rCA_values-en-rCA.arsc.flat
+│   │   │   │   │       ├── values-en-rGB_values-en-rGB.arsc.flat
+│   │   │   │   │       ├── values-en-rIN_values-en-rIN.arsc.flat
+│   │   │   │   │       ├── values-en-rXC_values-en-rXC.arsc.flat
+│   │   │   │   │       ├── values-es-rUS_values-es-rUS.arsc.flat
+│   │   │   │   │       ├── values-es_values-es.arsc.flat
+│   │   │   │   │       ├── values-et_values-et.arsc.flat
+│   │   │   │   │       ├── values-eu_values-eu.arsc.flat
+│   │   │   │   │       ├── values-fa_values-fa.arsc.flat
+│   │   │   │   │       ├── values-fi_values-fi.arsc.flat
+│   │   │   │   │       ├── values-fr-rCA_values-fr-rCA.arsc.flat
+│   │   │   │   │       ├── values-fr_values-fr.arsc.flat
+│   │   │   │   │       ├── values-gl_values-gl.arsc.flat
+│   │   │   │   │       ├── values-gu_values-gu.arsc.flat
+│   │   │   │   │       ├── values-hi_values-hi.arsc.flat
+│   │   │   │   │       ├── values-hr_values-hr.arsc.flat
+│   │   │   │   │       ├── values-hu_values-hu.arsc.flat
+│   │   │   │   │       ├── values-hy_values-hy.arsc.flat
+│   │   │   │   │       ├── values-in_values-in.arsc.flat
+│   │   │   │   │       ├── values-is_values-is.arsc.flat
+│   │   │   │   │       ├── values-it_values-it.arsc.flat
+│   │   │   │   │       ├── values-iw_values-iw.arsc.flat
+│   │   │   │   │       ├── values-ja_values-ja.arsc.flat
+│   │   │   │   │       ├── values-ka_values-ka.arsc.flat
+│   │   │   │   │       ├── values-kk_values-kk.arsc.flat
+│   │   │   │   │       ├── values-km_values-km.arsc.flat
+│   │   │   │   │       ├── values-kn_values-kn.arsc.flat
+│   │   │   │   │       ├── values-ko_values-ko.arsc.flat
+│   │   │   │   │       ├── values-ky_values-ky.arsc.flat
+│   │   │   │   │       ├── values-lo_values-lo.arsc.flat
+│   │   │   │   │       ├── values-lt_values-lt.arsc.flat
+│   │   │   │   │       ├── values-lv_values-lv.arsc.flat
+│   │   │   │   │       ├── values-mk_values-mk.arsc.flat
+│   │   │   │   │       ├── values-ml_values-ml.arsc.flat
+│   │   │   │   │       ├── values-mn_values-mn.arsc.flat
+│   │   │   │   │       ├── values-mr_values-mr.arsc.flat
+│   │   │   │   │       ├── values-ms_values-ms.arsc.flat
+│   │   │   │   │       ├── values-my_values-my.arsc.flat
+│   │   │   │   │       ├── values-nb_values-nb.arsc.flat
+│   │   │   │   │       ├── values-ne_values-ne.arsc.flat
+│   │   │   │   │       ├── values-nl_values-nl.arsc.flat
+│   │   │   │   │       ├── values-or_values-or.arsc.flat
+│   │   │   │   │       ├── values-pa_values-pa.arsc.flat
+│   │   │   │   │       ├── values-pl_values-pl.arsc.flat
+│   │   │   │   │       ├── values-pt-rBR_values-pt-rBR.arsc.flat
+│   │   │   │   │       ├── values-pt-rPT_values-pt-rPT.arsc.flat
+│   │   │   │   │       ├── values-pt_values-pt.arsc.flat
+│   │   │   │   │       ├── values-ro_values-ro.arsc.flat
+│   │   │   │   │       ├── values-ru_values-ru.arsc.flat
+│   │   │   │   │       ├── values-si_values-si.arsc.flat
+│   │   │   │   │       ├── values-sk_values-sk.arsc.flat
+│   │   │   │   │       ├── values-sl_values-sl.arsc.flat
+│   │   │   │   │       ├── values-sq_values-sq.arsc.flat
+│   │   │   │   │       ├── values-sr_values-sr.arsc.flat
+│   │   │   │   │       ├── values-sv_values-sv.arsc.flat
+│   │   │   │   │       ├── values-sw_values-sw.arsc.flat
+│   │   │   │   │       ├── values-ta_values-ta.arsc.flat
+│   │   │   │   │       ├── values-te_values-te.arsc.flat
+│   │   │   │   │       ├── values-th_values-th.arsc.flat
+│   │   │   │   │       ├── values-tl_values-tl.arsc.flat
+│   │   │   │   │       ├── values-tr_values-tr.arsc.flat
+│   │   │   │   │       ├── values-uk_values-uk.arsc.flat
+│   │   │   │   │       ├── values-ur_values-ur.arsc.flat
+│   │   │   │   │       ├── values-uz_values-uz.arsc.flat
+│   │   │   │   │       ├── values-v30_values-v30.arsc.flat
+│   │   │   │   │       ├── values_values.arsc.flat
+│   │   │   │   │       ├── values-vi_values-vi.arsc.flat
+│   │   │   │   │       ├── values-zh-rCN_values-zh-rCN.arsc.flat
+│   │   │   │   │       ├── values-zh-rHK_values-zh-rHK.arsc.flat
+│   │   │   │   │       ├── values-zh-rTW_values-zh-rTW.arsc.flat
+│   │   │   │   │       └── values-zu_values-zu.arsc.flat
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestResources
+│   │   │   ├── merged_res_blame_folder
+│   │   │   │   ├── debug
+│   │   │   │   │   └── mergeDebugResources
+│   │   │   │   │       └── out
+│   │   │   │   │           ├── multi-v2
+│   │   │   │   │           │   ├── mergeDebugResources.json
+│   │   │   │   │           │   ├── values-af.json
+│   │   │   │   │           │   ├── values-am.json
+│   │   │   │   │           │   ├── values-ar.json
+│   │   │   │   │           │   ├── values-as.json
+│   │   │   │   │           │   ├── values-az.json
+│   │   │   │   │           │   ├── values-be.json
+│   │   │   │   │           │   ├── values-bg.json
+│   │   │   │   │           │   ├── values-bn.json
+│   │   │   │   │           │   ├── values-bs.json
+│   │   │   │   │           │   ├── values-b+sr+Latn.json
+│   │   │   │   │           │   ├── values-ca.json
+│   │   │   │   │           │   ├── values-cs.json
+│   │   │   │   │           │   ├── values-da.json
+│   │   │   │   │           │   ├── values-de.json
+│   │   │   │   │           │   ├── values-el.json
+│   │   │   │   │           │   ├── values-en-rAU.json
+│   │   │   │   │           │   ├── values-en-rCA.json
+│   │   │   │   │           │   ├── values-en-rGB.json
+│   │   │   │   │           │   ├── values-en-rIN.json
+│   │   │   │   │           │   ├── values-en-rXC.json
+│   │   │   │   │           │   ├── values-es.json
+│   │   │   │   │           │   ├── values-es-rUS.json
+│   │   │   │   │           │   ├── values-et.json
+│   │   │   │   │           │   ├── values-eu.json
+│   │   │   │   │           │   ├── values-fa.json
+│   │   │   │   │           │   ├── values-fi.json
+│   │   │   │   │           │   ├── values-fr.json
+│   │   │   │   │           │   ├── values-fr-rCA.json
+│   │   │   │   │           │   ├── values-gl.json
+│   │   │   │   │           │   ├── values-gu.json
+│   │   │   │   │           │   ├── values-hi.json
+│   │   │   │   │           │   ├── values-hr.json
+│   │   │   │   │           │   ├── values-hu.json
+│   │   │   │   │           │   ├── values-hy.json
+│   │   │   │   │           │   ├── values-in.json
+│   │   │   │   │           │   ├── values-is.json
+│   │   │   │   │           │   ├── values-it.json
+│   │   │   │   │           │   ├── values-iw.json
+│   │   │   │   │           │   ├── values-ja.json
+│   │   │   │   │           │   ├── values.json
+│   │   │   │   │           │   ├── values-ka.json
+│   │   │   │   │           │   ├── values-kk.json
+│   │   │   │   │           │   ├── values-km.json
+│   │   │   │   │           │   ├── values-kn.json
+│   │   │   │   │           │   ├── values-ko.json
+│   │   │   │   │           │   ├── values-ky.json
+│   │   │   │   │           │   ├── values-lo.json
+│   │   │   │   │           │   ├── values-lt.json
+│   │   │   │   │           │   ├── values-lv.json
+│   │   │   │   │           │   ├── values-mk.json
+│   │   │   │   │           │   ├── values-ml.json
+│   │   │   │   │           │   ├── values-mn.json
+│   │   │   │   │           │   ├── values-mr.json
+│   │   │   │   │           │   ├── values-ms.json
+│   │   │   │   │           │   ├── values-my.json
+│   │   │   │   │           │   ├── values-nb.json
+│   │   │   │   │           │   ├── values-ne.json
+│   │   │   │   │           │   ├── values-nl.json
+│   │   │   │   │           │   ├── values-or.json
+│   │   │   │   │           │   ├── values-pa.json
+│   │   │   │   │           │   ├── values-pl.json
+│   │   │   │   │           │   ├── values-pt.json
+│   │   │   │   │           │   ├── values-pt-rBR.json
+│   │   │   │   │           │   ├── values-pt-rPT.json
+│   │   │   │   │           │   ├── values-ro.json
+│   │   │   │   │           │   ├── values-ru.json
+│   │   │   │   │           │   ├── values-si.json
+│   │   │   │   │           │   ├── values-sk.json
+│   │   │   │   │           │   ├── values-sl.json
+│   │   │   │   │           │   ├── values-sq.json
+│   │   │   │   │           │   ├── values-sr.json
+│   │   │   │   │           │   ├── values-sv.json
+│   │   │   │   │           │   ├── values-sw.json
+│   │   │   │   │           │   ├── values-ta.json
+│   │   │   │   │           │   ├── values-te.json
+│   │   │   │   │           │   ├── values-th.json
+│   │   │   │   │           │   ├── values-tl.json
+│   │   │   │   │           │   ├── values-tr.json
+│   │   │   │   │           │   ├── values-uk.json
+│   │   │   │   │           │   ├── values-ur.json
+│   │   │   │   │           │   ├── values-uz.json
+│   │   │   │   │           │   ├── values-v30.json
+│   │   │   │   │           │   ├── values-vi.json
+│   │   │   │   │           │   ├── values-zh-rCN.json
+│   │   │   │   │           │   ├── values-zh-rHK.json
+│   │   │   │   │           │   ├── values-zh-rTW.json
+│   │   │   │   │           │   └── values-zu.json
+│   │   │   │   │           └── single
+│   │   │   │   │               └── mergeDebugResources.json
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── mergeDebugAndroidTestResources
+│   │   │   │           └── out
+│   │   │   ├── merged_test_only_native_libs
+│   │   │   │   └── debug
+│   │   │   │       └── mergeDebugNativeLibs
+│   │   │   │           └── out
+│   │   │   ├── mixed_scope_dex_archive
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── navigation_json
+│   │   │   │   └── debug
+│   │   │   │       └── extractDeepLinksDebug
+│   │   │   │           └── navigation.json
+│   │   │   ├── nested_resources_validation_report
+│   │   │   │   ├── debug
+│   │   │   │   │   └── generateDebugResources
+│   │   │   │   │       └── nestedResourcesValidationReport.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── generateDebugAndroidTestResources
+│   │   │   │           └── nestedResourcesValidationReport.txt
+│   │   │   ├── packaged_manifests
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugManifestForPackage
+│   │   │   │   │       ├── AndroidManifest.xml
+│   │   │   │   │       └── output-metadata.json
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestManifest
+│   │   │   │           ├── AndroidManifest.xml
+│   │   │   │           └── output-metadata.json
+│   │   │   ├── packaged_res
+│   │   │   │   └── debug
+│   │   │   │       └── packageDebugResources
+│   │   │   │           ├── drawable
+│   │   │   │           │   └── ic_launcher_background.xml
+│   │   │   │           ├── drawable-v24
+│   │   │   │           │   └── ic_launcher_foreground.xml
+│   │   │   │           ├── mipmap-anydpi-v26
+│   │   │   │           │   ├── ic_launcher_round.xml
+│   │   │   │           │   └── ic_launcher.xml
+│   │   │   │           ├── mipmap-hdpi-v4
+│   │   │   │           │   ├── ic_launcher.png
+│   │   │   │           │   └── ic_launcher_round.png
+│   │   │   │           ├── mipmap-mdpi-v4
+│   │   │   │           │   ├── ic_launcher.png
+│   │   │   │           │   └── ic_launcher_round.png
+│   │   │   │           ├── mipmap-xhdpi-v4
+│   │   │   │           │   ├── ic_launcher.png
+│   │   │   │           │   └── ic_launcher_round.png
+│   │   │   │           ├── mipmap-xxhdpi-v4
+│   │   │   │           │   ├── ic_launcher.png
+│   │   │   │           │   └── ic_launcher_round.png
+│   │   │   │           ├── mipmap-xxxhdpi-v4
+│   │   │   │           │   ├── ic_launcher.png
+│   │   │   │           │   └── ic_launcher_round.png
+│   │   │   │           └── values
+│   │   │   │               └── values.xml
+│   │   │   ├── project_dex_archive
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   │           ├── 5ed85ffd1fe869584cf27cbc8204e013bd601611268781b9dc71c591ea6a292a_0.jar
+│   │   │   │   │           ├── 5ed85ffd1fe869584cf27cbc8204e013bd601611268781b9dc71c591ea6a292a_1.jar
+│   │   │   │   │           ├── 5ed85ffd1fe869584cf27cbc8204e013bd601611268781b9dc71c591ea6a292a_2.jar
+│   │   │   │   │           ├── 5ed85ffd1fe869584cf27cbc8204e013bd601611268781b9dc71c591ea6a292a_3.jar
+│   │   │   │   │           ├── caretrack
+│   │   │   │   │           │   └── composeapp
+│   │   │   │   │           │       └── generated
+│   │   │   │   │           │           └── resources
+│   │   │   │   │           │               ├── ActualResourceCollectorsKt.dex
+│   │   │   │   │           │               ├── Drawable0_commonMainKt.dex
+│   │   │   │   │           │               ├── Res$array.dex
+│   │   │   │   │           │               ├── Res$drawable.dex
+│   │   │   │   │           │               ├── Res$font.dex
+│   │   │   │   │           │               ├── Res$plurals.dex
+│   │   │   │   │           │               ├── Res$string.dex
+│   │   │   │   │           │               └── Res.dex
+│   │   │   │   │           └── com
+│   │   │   │   │               └── app
+│   │   │   │   │                   └── caretrack
+│   │   │   │   │                       ├── AndroidPlatform.dex
+│   │   │   │   │                       ├── AppKt.dex
+│   │   │   │   │                       ├── chat
+│   │   │   │   │                       │   ├── ChatComponentKt.dex
+│   │   │   │   │                       │   ├── ChatMessage.dex
+│   │   │   │   │                       │   ├── ComposableSingletons$ChatComponentKt.dex
+│   │   │   │   │                       │   └── MessageType.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt$lambda$-139460652$1$1$1$1$1.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$1.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$2.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$3.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$4.dex
+│   │   │   │   │                       ├── ComposableSingletons$AppKt.dex
+│   │   │   │   │                       ├── ComposableSingletons$MainActivityKt.dex
+│   │   │   │   │                       ├── Greeting.dex
+│   │   │   │   │                       ├── MainActivity.dex
+│   │   │   │   │                       ├── MainActivityKt.dex
+│   │   │   │   │                       ├── Platform_androidKt.dex
+│   │   │   │   │                       └── Platform.dex
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   │               └── a2c100e5b9c38ad33f1f0a058ed1b2e11f96613fe435f24db020ab99b7506d45_1.jar
+│   │   │   ├── runtime_symbol_list
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugResources
+│   │   │   │   │       └── R.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestResources
+│   │   │   │           └── R.txt
+│   │   │   ├── signing_config_versions
+│   │   │   │   ├── debug
+│   │   │   │   │   └── writeDebugSigningConfigVersions
+│   │   │   │   │       └── signing-config-versions.json
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── writeDebugAndroidTestSigningConfigVersions
+│   │   │   │           └── signing-config-versions.json
+│   │   │   ├── stable_resource_ids_file
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugResources
+│   │   │   │   │       └── stableIds.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestResources
+│   │   │   │           └── stableIds.txt
+│   │   │   ├── stripped_native_libs
+│   │   │   │   └── debug
+│   │   │   │       └── stripDebugDebugSymbols
+│   │   │   │           └── out
+│   │   │   │               └── lib
+│   │   │   │                   ├── arm64-v8a
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   ├── armeabi-v7a
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   ├── x86
+│   │   │   │                   │   └── libandroidx.graphics.path.so
+│   │   │   │                   └── x86_64
+│   │   │   │                       └── libandroidx.graphics.path.so
+│   │   │   ├── sub_project_dex_archive
+│   │   │   │   ├── debug
+│   │   │   │   │   └── dexBuilderDebug
+│   │   │   │   │       └── out
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── dexBuilderDebugAndroidTest
+│   │   │   │           └── out
+│   │   │   ├── symbol_list_with_package_name
+│   │   │   │   ├── debug
+│   │   │   │   │   └── processDebugResources
+│   │   │   │   │       └── package-aware-r.txt
+│   │   │   │   └── debugAndroidTest
+│   │   │   │       └── processDebugAndroidTestResources
+│   │   │   ├── tmp
+│   │   │   │   └── manifest
+│   │   │   │       └── androidTest
+│   │   │   │           └── debug
+│   │   │   └── validate_signing_config
+│   │   │       ├── debug
+│   │   │       │   └── validateSigningDebug
+│   │   │       └── debugAndroidTest
+│   │   │           └── validateSigningDebugAndroidTest
+│   │   ├── kotlin
+│   │   │   ├── commonizedNativeDistributionLocation.txt
+│   │   │   └── compileDebugKotlinAndroid
+│   │   │       ├── cacheable
+│   │   │       │   ├── caches-jvm
+│   │   │       │   │   ├── compilerPluginFiles
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab_i.len
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab.keystream
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab.keystream.len
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab.len
+│   │   │       │   │   │   ├── outputs-generated-for-plugins.tab.values.at
+│   │   │       │   │   │   ├── sources-referenced-by-plugins.tab
+│   │   │       │   │   │   ├── sources-referenced-by-plugins.tab_i.len
+│   │   │       │   │   │   ├── sources-referenced-by-plugins.tab.keystream
+│   │   │       │   │   │   ├── sources-referenced-by-plugins.tab.keystream.len
+│   │   │       │   │   │   ├── sources-referenced-by-plugins.tab.len
+│   │   │       │   │   │   └── sources-referenced-by-plugins.tab.values.at
+│   │   │       │   │   ├── inputs
+│   │   │       │   │   │   ├── source-to-output.tab
+│   │   │       │   │   │   ├── source-to-output.tab_i
+│   │   │       │   │   │   ├── source-to-output.tab_i.len
+│   │   │       │   │   │   ├── source-to-output.tab.keystream
+│   │   │       │   │   │   ├── source-to-output.tab.keystream.len
+│   │   │       │   │   │   ├── source-to-output.tab.len
+│   │   │       │   │   │   └── source-to-output.tab.values.at
+│   │   │       │   │   ├── jvm
+│   │   │       │   │   │   └── kotlin
+│   │   │       │   │   │       ├── class-attributes.tab
+│   │   │       │   │   │       ├── class-attributes.tab_i
+│   │   │       │   │   │       ├── class-attributes.tab_i.len
+│   │   │       │   │   │       ├── class-attributes.tab.keystream
+│   │   │       │   │   │       ├── class-attributes.tab.keystream.len
+│   │   │       │   │   │       ├── class-attributes.tab.len
+│   │   │       │   │   │       ├── class-attributes.tab.values.at
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab_i
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab_i.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.keystream
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.keystream.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.values.at
+│   │   │       │   │   │       ├── complementary-files.tab
+│   │   │       │   │   │       ├── complementary-files.tab_i
+│   │   │       │   │   │       ├── complementary-files.tab_i.len
+│   │   │       │   │   │       ├── complementary-files.tab.keystream
+│   │   │       │   │   │       ├── complementary-files.tab.keystream.len
+│   │   │       │   │   │       ├── complementary-files.tab.len
+│   │   │       │   │   │       ├── complementary-files.tab.values.at
+│   │   │       │   │   │       ├── internal-name-to-source.tab
+│   │   │       │   │   │       ├── internal-name-to-source.tab_i
+│   │   │       │   │   │       ├── internal-name-to-source.tab_i.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab.keystream
+│   │   │       │   │   │       ├── internal-name-to-source.tab.keystream.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab.values.at
+│   │   │       │   │   │       ├── package-parts.tab
+│   │   │       │   │   │       ├── package-parts.tab_i
+│   │   │       │   │   │       ├── package-parts.tab_i.len
+│   │   │       │   │   │       ├── package-parts.tab.keystream
+│   │   │       │   │   │       ├── package-parts.tab.keystream.len
+│   │   │       │   │   │       ├── package-parts.tab.len
+│   │   │       │   │   │       ├── package-parts.tab.values.at
+│   │   │       │   │   │       ├── proto.tab
+│   │   │       │   │   │       ├── proto.tab_i
+│   │   │       │   │   │       ├── proto.tab_i.len
+│   │   │       │   │   │       ├── proto.tab.keystream
+│   │   │       │   │   │       ├── proto.tab.keystream.len
+│   │   │       │   │   │       ├── proto.tab.len
+│   │   │       │   │   │       ├── proto.tab.values.at
+│   │   │       │   │   │       ├── source-to-classes.tab
+│   │   │       │   │   │       ├── source-to-classes.tab_i
+│   │   │       │   │   │       ├── source-to-classes.tab_i.len
+│   │   │       │   │   │       ├── source-to-classes.tab.keystream
+│   │   │       │   │   │       ├── source-to-classes.tab.keystream.len
+│   │   │       │   │   │       ├── source-to-classes.tab.len
+│   │   │       │   │   │       ├── source-to-classes.tab.values.at
+│   │   │       │   │   │       ├── subtypes.tab
+│   │   │       │   │   │       ├── subtypes.tab_i
+│   │   │       │   │   │       ├── subtypes.tab_i.len
+│   │   │       │   │   │       ├── subtypes.tab.keystream
+│   │   │       │   │   │       ├── subtypes.tab.keystream.len
+│   │   │       │   │   │       ├── subtypes.tab.len
+│   │   │       │   │   │       ├── subtypes.tab.values.at
+│   │   │       │   │   │       ├── supertypes.tab
+│   │   │       │   │   │       ├── supertypes.tab_i
+│   │   │       │   │   │       ├── supertypes.tab_i.len
+│   │   │       │   │   │       ├── supertypes.tab.keystream
+│   │   │       │   │   │       ├── supertypes.tab.keystream.len
+│   │   │       │   │   │       ├── supertypes.tab.len
+│   │   │       │   │   │       └── supertypes.tab.values.at
+│   │   │       │   │   └── lookups
+│   │   │       │   │       ├── counters.tab
+│   │   │       │   │       ├── file-to-id.tab
+│   │   │       │   │       ├── file-to-id.tab_i
+│   │   │       │   │       ├── file-to-id.tab_i.len
+│   │   │       │   │       ├── file-to-id.tab.keystream
+│   │   │       │   │       ├── file-to-id.tab.keystream.len
+│   │   │       │   │       ├── file-to-id.tab.len
+│   │   │       │   │       ├── file-to-id.tab.values.at
+│   │   │       │   │       ├── id-to-file.tab
+│   │   │       │   │       ├── id-to-file.tab_i
+│   │   │       │   │       ├── id-to-file.tab_i.len
+│   │   │       │   │       ├── id-to-file.tab.keystream
+│   │   │       │   │       ├── id-to-file.tab.keystream.len
+│   │   │       │   │       ├── id-to-file.tab.len
+│   │   │       │   │       ├── id-to-file.tab.values.at
+│   │   │       │   │       ├── lookups.tab
+│   │   │       │   │       ├── lookups.tab_i
+│   │   │       │   │       ├── lookups.tab_i.len
+│   │   │       │   │       ├── lookups.tab.keystream
+│   │   │       │   │       ├── lookups.tab.keystream.len
+│   │   │       │   │       ├── lookups.tab.len
+│   │   │       │   │       └── lookups.tab.values.at
+│   │   │       │   └── last-build.bin
+│   │   │       ├── classpath-snapshot
+│   │   │       │   └── shrunk-classpath-snapshot.bin
+│   │   │       └── local-state
+│   │   ├── outputs
+│   │   │   ├── apk
+│   │   │   │   └── debug
+│   │   │   │       ├── composeApp-debug.apk
+│   │   │   │       └── output-metadata.json
+│   │   │   └── logs
+│   │   │       └── manifest-merger-debug-report.txt
+│   │   └── tmp
+│   │       └── kotlin-classes
+│   │           └── debug
+│   │               ├── caretrack
+│   │               │   └── composeapp
+│   │               │       └── generated
+│   │               │           └── resources
+│   │               │               ├── ActualResourceCollectorsKt.class
+│   │               │               ├── Drawable0_commonMainKt.class
+│   │               │               ├── Res$array.class
+│   │               │               ├── Res$drawable.class
+│   │               │               ├── Res$font.class
+│   │               │               ├── Res$plurals.class
+│   │               │               ├── Res$string.class
+│   │               │               └── Res.class
+│   │               ├── com
+│   │               │   └── app
+│   │               │       └── caretrack
+│   │               │           ├── AndroidPlatform.class
+│   │               │           ├── AppKt.class
+│   │               │           ├── chat
+│   │               │           │   ├── ChatComponentKt.class
+│   │               │           │   ├── ChatMessage.class
+│   │               │           │   ├── ComposableSingletons$ChatComponentKt.class
+│   │               │           │   └── MessageType.class
+│   │               │           ├── ComposableSingletons$AppKt$lambda$-139460652$1$1$1$1$1.class
+│   │               │           ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$1.class
+│   │               │           ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$2.class
+│   │               │           ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$3.class
+│   │               │           ├── ComposableSingletons$AppKt$lambda__139460652$lambda$0$2$0$0$0$$inlined$items$default$4.class
+│   │               │           ├── ComposableSingletons$AppKt.class
+│   │               │           ├── ComposableSingletons$MainActivityKt.class
+│   │               │           ├── Greeting.class
+│   │               │           ├── MainActivity.class
+│   │               │           ├── MainActivityKt.class
+│   │               │           ├── Platform_androidKt.class
+│   │               │           └── Platform.class
+│   │               └── META-INF
+│   │                   └── composeApp_debug.kotlin_module
+│   ├── build.gradle.kts
+│   └── src
+│       ├── androidMain
+│       │   ├── AndroidManifest.xml
+│       │   ├── kotlin
+│       │   │   └── com
+│       │   │       └── app
+│       │   │           └── caretrack
+│       │   │               ├── MainActivity.kt
+│       │   │               └── Platform.android.kt
+│       │   └── res
+│       │       ├── drawable
+│       │       │   └── ic_launcher_background.xml
+│       │       ├── drawable-v24
+│       │       │   └── ic_launcher_foreground.xml
+│       │       ├── mipmap-anydpi-v26
+│       │       │   ├── ic_launcher_round.xml
+│       │       │   └── ic_launcher.xml
+│       │       ├── mipmap-hdpi
+│       │       │   ├── ic_launcher.png
+│       │       │   └── ic_launcher_round.png
+│       │       ├── mipmap-mdpi
+│       │       │   ├── ic_launcher.png
+│       │       │   └── ic_launcher_round.png
+│       │       ├── mipmap-xhdpi
+│       │       │   ├── ic_launcher.png
+│       │       │   └── ic_launcher_round.png
+│       │       ├── mipmap-xxhdpi
+│       │       │   ├── ic_launcher.png
+│       │       │   └── ic_launcher_round.png
+│       │       ├── mipmap-xxxhdpi
+│       │       │   ├── ic_launcher.png
+│       │       │   └── ic_launcher_round.png
+│       │       └── values
+│       │           └── strings.xml
+│       ├── commonMain
+│       │   ├── composeResources
+│       │   │   └── drawable
+│       │   │       ├── add_24px.xml
+│       │   │       ├── audio_file_24px.xml
+│       │   │       ├── compose-multiplatform.xml
+│       │   │       ├── image_24px.xml
+│       │   │       ├── mic_24px.xml
+│       │   │       ├── picture_as_pdf_24px.xml
+│       │   │       └── send_24px.xml
+│       │   └── kotlin
+│       │       └── com
+│       │           └── app
+│       │               └── caretrack
+│       │                   ├── App.kt
+│       │                   ├── chat
+│       │                   │   └── ChatComponent.kt
+│       │                   ├── Greeting.kt
+│       │                   └── Platform.kt
+│       ├── commonTest
+│       │   └── kotlin
+│       │       └── com
+│       │           └── app
+│       │               └── caretrack
+│       │                   └── ComposeAppCommonTest.kt
+│       ├── iosMain
+│       │   └── kotlin
+│       │       └── com
+│       │           └── app
+│       │               └── caretrack
+│       │                   ├── MainViewController.kt
+│       │                   └── Platform.ios.kt
+│       └── main
+│           └── res
+│               └── drawable
+├── drawable
+├── gradle
+│   ├── gradle-daemon-jvm.properties
+│   ├── libs.versions.toml
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── iosApp
+│   ├── Configuration
+│   │   └── Config.xcconfig
+│   ├── iosApp
+│   │   ├── Assets.xcassets
+│   │   │   ├── AccentColor.colorset
+│   │   │   │   └── Contents.json
+│   │   │   ├── AppIcon.appiconset
+│   │   │   │   ├── app-icon-1024.png
+│   │   │   │   └── Contents.json
+│   │   │   └── Contents.json
+│   │   ├── ContentView.swift
+│   │   ├── Info.plist
+│   │   ├── iOSApp.swift
+│   │   └── Preview Content
+│   │       └── Preview Assets.xcassets
+│   │           └── Contents.json
+│   └── iosApp.xcodeproj
+│       ├── project.pbxproj
+│       └── project.xcworkspace
+│           └── contents.xcworkspacedata
+├── local.properties
+├── logs-emulator
+│   ├── motorola-edge-50-fusion-Android-16_2026-05-06_222315.logcat
+│   └── motorolaedge50fusion-log.txt
+├── project-strutcture.txt
+├── README.md
+├── settings.gradle.kts
+└── tree.txt
+
+729 directories, 779 files
