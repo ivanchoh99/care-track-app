@@ -3,12 +3,13 @@ package com.app.caretrack.chat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -20,8 +21,6 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
         val VALID_IMAGE_EXT = listOf("jpg", "jpeg", "png", "webp")
     }
 
-    // Convertimos el Flow de Room en un StateFlow para la UI
-    // Esto hace que la lista se actualice sola al insertar en la DB
     val messages: StateFlow<List<ChatMessage>> = dao.getAllMessages()
         .map { entities ->
             if (entities.isEmpty()) {
@@ -61,8 +60,6 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
                 timestamp = Clock.System.now().toEpochMilliseconds()
             )
             dao.insertMessage(userMessage)
-
-            // Simulación de respuesta
             generateBotResponse("Entendido, he guardado tu mensaje.")
         }
     }
@@ -71,7 +68,8 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
         fileName: String,
         extension: String?,
         type: MessageType,
-        filePath: String? = null // Usamos la ruta para no saturar la DB con bytes
+        filePath: String? = null,
+        fileBytes: ByteArray? = null
     ) {
         val ext = extension?.lowercase() ?: fileName.substringAfterLast(".", "").lowercase()
         val isAllowed = when (type) {
@@ -91,7 +89,7 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
                     timestamp = Clock.System.now().toEpochMilliseconds(),
                     fileName = fileName,
                     extension = ext,
-                    filePath = filePath // Referencia física al archivo en el celular
+                    filePath = filePath // Se guarda en Room permanentemente
                 )
                 dao.insertMessage(entity)
                 generateBotResponse("He recibido tu archivo: $fileName")
@@ -112,15 +110,15 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
         dao.insertMessage(botMessage)
     }
 
-    // Mapper de Entidad (DB) a Modelo (UI)
+    // Convertimos la Entidad de BD a un Modelo que la vista pueda leer
     private fun MessageEntity.toChatMessage() = ChatMessage(
-        id = Uuid.parse(this.id),
+        id = this.id,
         content = this.content,
         type = MessageType.valueOf(this.type),
         isMine = this.isMine,
         fileName = this.fileName,
         extension = this.extension,
         size = this.size,
-        filePath = this.filePath // El reproductor usará esta ruta para "leer" el archivo
+        filePath = this.filePath
     )
 }

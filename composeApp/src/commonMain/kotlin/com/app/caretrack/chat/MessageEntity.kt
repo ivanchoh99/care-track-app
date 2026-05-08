@@ -13,5 +13,5 @@ data class MessageEntity(
     val fileName: String? = null,
     val extension: String? = null,
     val size: String? = null,
-    val filePath: String? = null // La ruta se guarda en la base de datos
+    val filePath: String? = null // La ruta donde se encuentra guardado el archivo/audio
 )

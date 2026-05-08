@@ -1,4 +1,4 @@
-package com.app.caretrack.chat;
+package com.app.caretrack.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,8 +59,9 @@ fun MessageItem(message: ChatMessage, player: AudioPlayer? = null) {
                     }
 
                     MessageType.AUDIO -> {
-                        // Llamada limpia, sin pasar colores
-                        AudioMessageBubble(message, player)
+                        if (player != null) {
+                            AudioMessageBubble(message, player)
+                        }
                     }
 
                     MessageType.DOCUMENT -> {
@@ -88,19 +89,16 @@ fun MessageItem(message: ChatMessage, player: AudioPlayer? = null) {
 }
 
 @Composable
-fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer? = null) {
+fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer) {
     var isPlaying by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf(0f) }
     var seconds by remember { mutableStateOf(0) }
 
-    val dynamicTintColor = if (message.isMine) {
-        MaterialTheme.colorScheme.onPrimary
-    } else {
-        MaterialTheme.colorScheme.primary
-    }
+    val dynamicTintColor =
+        if (message.isMine) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
 
     LaunchedEffect(isPlaying) {
-        while (isPlaying && player != null) {
+        while (isPlaying) {
             if (player.isPlaying()) {
                 val current = player.getCurrentPosition()
                 val total = player.getDuration()
@@ -114,37 +112,34 @@ fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer? = null) {
                 progress = 0f
                 seconds = 0
             }
-            kotlinx.coroutines.delay(100)
         }
     }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 4.dp)
-    ) {
-        IconButton(onClick = {
-            if (player != null) {
-                if (!isPlaying) {
-                    // --- AQUÍ ESTÁ LA MAGIA DE LA DECISIÓN ---
-                    if (message.fileBytes != null && message.fileBytes.isNotEmpty()) {
-                        // 1. Es un archivo subido desde FileKit (usamos los bytes en memoria)
-                        player.playAudioFromBytes(message.fileBytes)
-                    } else {
-                        // 2. Es una nota de voz interna (usamos la ruta relativa de filesDir)
-                        player.playAudio(message.content)
-                    }
-                    isPlaying = true
-                } else {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        IconButton(
+            onClick = {
+                if (isPlaying) {
+                    // Si está reproduciendo, lo detenemos
                     player.stopAudio()
                     isPlaying = false
-                    progress = 0f
-                    seconds = 0
+                } else {
+                    // AQUÍ ESTÁ EL CAMBIO CLAVE: Usamos la ruta física guardada en Room
+                    message.filePath?.let { path ->
+                        player.playAudio(path)
+                        isPlaying = true
+                    } ?: run {
+                        // Opcional: Mostrar un Toast o log si el archivo fue borrado del celular
+                        println("No se encontró el archivo en la ruta: ${message.filePath}")
+                    }
                 }
             }
-        }) {
+        ) {
             Icon(
-                painter = painterResource(if (isPlaying) Res.drawable.stop_circle_24px else Res.drawable.play_circle_24px),
-                contentDescription = null,
+                painter = painterResource(
+                    if (isPlaying) Res.drawable.stop_circle_24px
+                    else Res.drawable.play_circle_24px
+                ),
+                contentDescription = if (isPlaying) "Detener" else "Reproducir",
                 tint = dynamicTintColor,
                 modifier = Modifier.size(32.dp)
             )
@@ -161,9 +156,10 @@ fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer? = null) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                // Formateamos el nombre del archivo para que no rompa el diseño
                 val displayName = message.content.substringAfterLast("/").take(12)
                 Text(
-                    text = if (displayName.length == 12) "$displayName..." else displayName,
+                    text = if (message.content.length > 12) "$displayName..." else displayName,
                     style = MaterialTheme.typography.labelSmall,
                     color = dynamicTintColor.copy(alpha = 0.8f)
                 )

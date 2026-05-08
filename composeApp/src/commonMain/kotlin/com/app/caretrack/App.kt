@@ -32,72 +32,89 @@ import com.app.caretrack.chat.rememberPermissionLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
 import io.github.vinceglb.filekit.core.extension
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
 
 @Composable
 fun App(dao: ChatDao) {
-
     val chatViewModel: ChatViewModel = viewModel { ChatViewModel(dao) }
     val messages by chatViewModel.messages.collectAsStateWithLifecycle()
-    val recorder = rememberAudioRecorder()
-    val scope = rememberCoroutineScope()
+
     val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
     val player = rememberAudioPlayer()
+    val recorder = rememberAudioRecorder()
+
     var currentRecordName by remember { mutableStateOf("") }
-
-    // --- LÓGICA DE PERMISOS ---
     var hasAudioPermission by remember { mutableStateOf(false) }
-    val permissionLauncher = rememberPermissionLauncher { isGranted ->
-        hasAudioPermission = isGranted
-    }
 
-    // --- SELECTORES DE ARCHIVOS (FILEKIT) ---
+    val permissionLauncher = rememberPermissionLauncher(
+        onResult = { isGranted ->
+            hasAudioPermission = isGranted
+        }
+    )
 
-    // Selector de Imágenes
+    // 1. Selector de Imágenes
     val imageLauncher = rememberFilePickerLauncher(
         type = PickerType.Image,
         title = "Seleccionar Imagen"
     ) { file ->
-        // USAMOS LA NUEVA FUNCIÓN UNIFICADA
-        file?.let { chatViewModel.processAndSendFile(it.name, it.extension, MessageType.IMAGE) }
-    }
-
-// Selector de Audio
-    val audioLauncher = rememberFilePickerLauncher(
-        type = PickerType.File(extensions = ChatViewModel.VALID_AUDIO_EXT),
-        title = "Seleccionar Audio"
-    ) { file ->
         file?.let {
-            scope.launch {
-                // AQUÍ ES DONDE RESCATAMOS LA INFORMACIÓN ANTES DE QUE FILEKIT LA BORRE
+            scope.launch(Dispatchers.IO) {
+                // Leemos los bytes del archivo virtual de forma segura en segundo plano
                 val bytes = it.readBytes()
-
                 chatViewModel.processAndSendFile(
                     fileName = it.name,
                     extension = it.extension,
-                    type = MessageType.AUDIO,
-                    filePath = bytes // Lo enviamos a tu modelo
+                    type = MessageType.IMAGE,
+                    fileBytes = bytes // Enviamos los bytes al ViewModel
                 )
             }
         }
     }
 
-// Selector de PDF
+    // 2. Selector de Audio
+    val audioLauncher = rememberFilePickerLauncher(
+        type = PickerType.File(extensions = ChatViewModel.VALID_AUDIO_EXT),
+        title = "Seleccionar Audio"
+    ) { file ->
+        file?.let {
+            scope.launch(Dispatchers.IO) {
+                val bytes = it.readBytes()
+                chatViewModel.processAndSendFile(
+                    fileName = it.name,
+                    extension = it.extension,
+                    type = MessageType.AUDIO,
+                    fileBytes = bytes
+                )
+            }
+        }
+    }
+
+    // 3. Selector de Documentos (PDF)
     val pdfLauncher = rememberFilePickerLauncher(
         type = PickerType.File(extensions = listOf("pdf")),
-        title = "Seleccionar PDF"
+        title = "Seleccionar Documento"
     ) { file ->
-        file?.let { chatViewModel.processAndSendFile(it.name, it.extension, MessageType.DOCUMENT) }
+        file?.let {
+            scope.launch(Dispatchers.IO) {
+                val bytes = it.readBytes()
+                chatViewModel.processAndSendFile(
+                    fileName = it.name,
+                    extension = it.extension,
+                    type = MessageType.DOCUMENT,
+                    fileBytes = bytes
+                )
+            }
+        }
     }
 
     MaterialTheme {
         Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding(), // Soluciona el solapamiento con la barra de estado
+            modifier = Modifier.safeDrawingPadding(),
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
             bottomBar = {
                 ChatInputBar(
                     onSendMessage = { text ->
@@ -117,7 +134,6 @@ fun App(dao: ChatDao) {
                     },
                     onVoiceNoteStart = {
                         if (hasAudioPermission) {
-                            // Generamos un nombre único con el timestamp actual
                             currentRecordName =
                                 "nota_voz_${Clock.System.now().toEpochMilliseconds()}.m4a"
                             recorder.startRecording(currentRecordName)
@@ -127,13 +143,14 @@ fun App(dao: ChatDao) {
                     },
                     onVoiceNoteEnd = {
                         if (hasAudioPermission) {
-                            recorder.stopRecording()
+                            // La grabadora nativa SÍ devuelve una ruta física, por eso pasamos filePath
+                            val savedPath = recorder.stopRecording()
 
-                            // Usamos el nombre único que generamos al inicio
                             chatViewModel.processAndSendFile(
                                 fileName = currentRecordName,
                                 extension = "m4a",
-                                MessageType.AUDIO
+                                type = MessageType.AUDIO,
+                                filePath = savedPath
                             )
 
                             scope.launch {
@@ -154,7 +171,7 @@ fun App(dao: ChatDao) {
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(messages) { message ->
+                items(items = messages, key = { it.id }) { message ->
                     MessageItem(message = message, player = player)
                 }
             }
