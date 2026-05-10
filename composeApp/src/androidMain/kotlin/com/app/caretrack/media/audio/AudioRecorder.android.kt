@@ -1,5 +1,6 @@
 package com.app.caretrack.media.audio
 
+import android.content.Context
 import android.media.MediaRecorder
 import com.app.caretrack.common.AppLogger
 import androidx.compose.runtime.Composable
@@ -8,7 +9,18 @@ import androidx.compose.ui.platform.LocalContext
 import java.io.File
 
 actual class AudioRecorder actual constructor(context: Any?) {
-    private val androidContext = context as? android.content.Context
+    private var androidContext: Context? = null
+    
+    init {
+        // Verificar y guardar el contexto
+        androidContext = if (context is Context) {
+            context.applicationContext as? Context
+        } else {
+            context as? Context
+        }
+        AppLogger.d("AudioRecorder", "AudioRecorder inicializado con contexto: ${androidContext?.filesDir}")
+    }
+    
     private var recorder: MediaRecorder? = null
     private var currentRecordedPath: String = ""
     private var lastAbsolutePath: String = ""
@@ -22,20 +34,29 @@ actual class AudioRecorder actual constructor(context: Any?) {
         recorder = null
         
         currentRecordedPath = path
+        
+        // Asegurar que el directorio existe
+        val filesDir = androidContext?.filesDir
+        if (filesDir == null) {
+            AppLogger.e("AudioRecorder", "Error: contexto de aplicación no disponible")
+            throw IllegalStateException("Application context not available")
+        }
+        
         val absolutePath = if (path.startsWith("/")) {
             path
         } else {
-            File(androidContext?.filesDir, path).absolutePath
+            File(filesDir, path).absolutePath
         }
         lastAbsolutePath = absolutePath
+        
+        // Crear directorio si no existe
+        File(absolutePath).parentFile?.mkdirs()
+
+        AppLogger.d("AudioRecorder", "Intentando grabar en: $absolutePath")
+        AppLogger.d("AudioRecorder", "FilesDir: ${filesDir.absolutePath}")
 
         try {
-            recorder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                androidContext?.let { MediaRecorder(it) } ?: MediaRecorder()
-            } else {
-                @Suppress("DEPRECATION")
-                MediaRecorder()
-            }.apply {
+            recorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
@@ -43,12 +64,13 @@ actual class AudioRecorder actual constructor(context: Any?) {
                 prepare()
                 start()
             }
-            AppLogger.d("AudioRecorder", "Grabación iniciada - path: $absolutePath")
+            AppLogger.d("AudioRecorder", "✅ Grabación iniciada exitosamente - path: $absolutePath")
         } catch (e: Exception) {
-            AppLogger.e("AudioRecorder", "Error al iniciar grabación: ${e.message}")
+            AppLogger.e("AudioRecorder", "❌ Error al iniciar grabación: ${e.message}")
+            AppLogger.e("AudioRecorder", "Stack trace: ${e.stackTraceToString()}")
             try { recorder?.release() } catch (_: Exception) { }
             recorder = null
-            throw e  // Re-lanzar para que el UI pueda manejar el error
+            throw e
         }
     }
 
