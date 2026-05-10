@@ -59,6 +59,7 @@ import com.app.caretrack.media.audio.rememberAudioPlayer
 import com.app.caretrack.media.audio.rememberAudioRecorder
 import com.app.caretrack.common.AppLogger
 import com.app.caretrack.common.rememberPermissionLauncher
+import com.app.caretrack.common.checkInitialAudioPermission
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
 import io.github.vinceglb.filekit.core.extension
@@ -86,6 +87,11 @@ fun App(repository: ChatRepository) {
             hasAudioPermission = isGranted
         }
     )
+
+    // Verificar estado inicial del permiso de audio
+    LaunchedEffect(Unit) {
+        hasAudioPermission = checkInitialAudioPermission()
+    }
 
     // Imagen se envía directamente sin confirmación (selección directa)
     val imageLauncher = rememberFilePickerLauncher(

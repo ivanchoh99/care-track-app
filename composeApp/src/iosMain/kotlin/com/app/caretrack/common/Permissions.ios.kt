@@ -21,3 +21,7 @@ actual fun rememberPermissionLauncher(onResult: (Boolean) -> Unit): PermissionRe
         }
     }
 }
+
+actual fun checkInitialAudioPermission(): Boolean {
+    return true
+}
