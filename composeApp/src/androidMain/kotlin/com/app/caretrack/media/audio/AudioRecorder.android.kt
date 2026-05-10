@@ -15,6 +15,12 @@ actual class AudioRecorder actual constructor(context: Any?) {
 
     @Suppress("DEPRECATION")
     actual fun startRecording(path: String) {
+        // LIBERAR recorder anterior para evitar conflictos de estado
+        try {
+            recorder?.release()
+        } catch (_: Exception) { }
+        recorder = null
+        
         currentRecordedPath = path
         val absolutePath = if (path.startsWith("/")) {
             path
@@ -23,18 +29,26 @@ actual class AudioRecorder actual constructor(context: Any?) {
         }
         lastAbsolutePath = absolutePath
 
-        recorder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            androidContext?.let { MediaRecorder(it) } ?: MediaRecorder()
-        } else {
-            @Suppress("DEPRECATION")
-            MediaRecorder()
-        }.apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            setOutputFile(absolutePath)
-            prepare()
-            start()
+        try {
+            recorder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                androidContext?.let { MediaRecorder(it) } ?: MediaRecorder()
+            } else {
+                @Suppress("DEPRECATION")
+                MediaRecorder()
+            }.apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setOutputFile(absolutePath)
+                prepare()
+                start()
+            }
+            AppLogger.d("AudioRecorder", "Grabación iniciada - path: $absolutePath")
+        } catch (e: Exception) {
+            AppLogger.e("AudioRecorder", "Error al iniciar grabación: ${e.message}")
+            try { recorder?.release() } catch (_: Exception) { }
+            recorder = null
+            throw e  // Re-lanzar para que el UI pueda manejar el error
         }
     }
 

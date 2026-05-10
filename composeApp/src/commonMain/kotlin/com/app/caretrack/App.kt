@@ -57,6 +57,7 @@ import com.app.caretrack.chat.MessageType
 import com.app.caretrack.chat.UiState
 import com.app.caretrack.media.audio.rememberAudioPlayer
 import com.app.caretrack.media.audio.rememberAudioRecorder
+import com.app.caretrack.common.AppLogger
 import com.app.caretrack.common.rememberPermissionLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
@@ -164,9 +165,15 @@ fun App(repository: ChatRepository) {
                         },
                         onVoiceNoteStart = {
                             if (hasAudioPermission) {
-                                currentRecordName =
-                                    "nota_voz_${Clock.System.now().toEpochMilliseconds()}.m4a"
-                                recorder.startRecording(currentRecordName)
+                                try {
+                                    currentRecordName =
+                                        "nota_voz_${Clock.System.now().toEpochMilliseconds()}.m4a"
+                                    recorder.startRecording(currentRecordName)
+                                } catch (e: Exception) {
+                                    AppLogger.e("App", "Error al iniciar grabación: ${e.message}")
+                                    hasAudioPermission = false
+                                    permissionLauncher.launch()
+                                }
                             } else {
                                 permissionLauncher.launch()
                             }
