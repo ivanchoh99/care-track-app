@@ -12,23 +12,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_prefs")
+private val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_prefs")
 
-actual class TokenStore actual constructor() {
+actual class TokenStore {
     private var context: Context? = null
     
     fun initialize(ctx: Context) {
         context = ctx
     }
     
+    private val store: DataStore<Preferences>
+        get() = context?.authDataStore ?: throw IllegalStateException("TokenStore not initialized")
+    
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
         private val EXPIRES_AT_KEY = longPreferencesKey("expires_at")
     }
-    
-    private val store: DataStore<Preferences>
-        get() = context?.dataStore ?: throw IllegalStateException("TokenStore not initialized")
     
     actual suspend fun saveTokens(tokens: AuthTokens) {
         store.edit { prefs ->

@@ -14,14 +14,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.app.caretrack.auth.data.AuthRepository
 import com.app.caretrack.auth.data.SessionManager
+import com.app.caretrack.auth.ui.LoginScreen
+import com.app.caretrack.auth.ui.LoginViewModel
 import com.app.caretrack.chat.ChatRepository
 import com.app.caretrack.chat.ChatScreen
 import com.app.caretrack.theme.CareTrackTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun AppNavigation(
     sessionManager: SessionManager,
+    authRepository: AuthRepository,
     repository: ChatRepository
 ) {
     val navController = rememberNavController()
@@ -33,7 +38,17 @@ fun AppNavigation(
             startDestination = if (session != null) Screen.Chat.route else Screen.Login.route
         ) {
             composable(Screen.Login.route) {
-                LoginScreenPlaceholder(navController = navController)
+                val loginViewModel: LoginViewModel = viewModel {
+                    LoginViewModel(authRepository)
+                }
+                LoginScreen(
+                    viewModel = loginViewModel,
+                    onLoginSuccess = {
+                        navController.navigate(Screen.Chat.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    }
+                )
             }
 
             composable(Screen.Chat.route) {
