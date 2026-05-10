@@ -1,11 +1,15 @@
 package com.app.caretrack.chat.network
 
+import com.app.caretrack.auth.model.AuthResponse
+import com.app.caretrack.auth.model.LoginRequest
+import com.app.caretrack.auth.model.UserModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -14,6 +18,9 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.websocket.WebSocketSession
 import io.ktor.websocket.close
 import io.ktor.websocket.send
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 
 // =============================================================================
@@ -89,9 +96,47 @@ class ApiService(
      *         `Result.failure(exception)` si hay error de red.
      */
     suspend fun healthCheck(): Result<HealthResponse> = runCatching {
-        // `.body<HealthResponse>()` deserializa el JSON de la respuesta
-        // automáticamente a una instancia de HealthResponse (gracias a ContentNegotiation)
         httpClient.get("$baseUrl/health").body<HealthResponse>()
+    }
+
+    private val _accessToken = MutableStateFlow<String?>(null)
+    val accessToken: StateFlow<String?> = _accessToken.asStateFlow()
+
+    fun setAccessToken(token: String?) {
+        _accessToken.value = token
+    }
+
+    suspend fun login(request: LoginRequest): Result<AuthResponse> = runCatching {
+        val response = httpClient.post("$baseUrl/api/auth/login") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }.body<AuthResponse>()
+        _accessToken.value = response.tokens.accessToken
+        response
+    }
+
+    suspend fun logout(): Result<Unit> = runCatching {
+        _accessToken.value?.let { token ->
+            httpClient.post("$baseUrl/api/auth/logout") {
+                header("Authorization", "Bearer $token")
+            }
+        }
+        _accessToken.value = null
+    }
+
+    suspend fun refreshToken(refreshToken: String): Result<AuthResponse> = runCatching {
+        val response = httpClient.post("$baseUrl/api/auth/refresh") {
+            contentType(ContentType.Application.Json)
+            setBody(mapOf("refreshToken" to refreshToken))
+        }.body<AuthResponse>()
+        _accessToken.value = response.tokens.accessToken
+        response
+    }
+
+    suspend fun getCurrentUser(token: String): Result<UserModel> = runCatching {
+        httpClient.get("$baseUrl/api/users/me") {
+            header("Authorization", "Bearer $token")
+        }.body<UserModel>()
     }
 
     /**
