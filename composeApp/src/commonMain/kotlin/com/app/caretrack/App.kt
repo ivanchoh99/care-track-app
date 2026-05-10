@@ -81,12 +81,29 @@ fun App(repository: ChatRepository) {
 
     var currentRecordName by remember { mutableStateOf("") }
     var hasAudioPermission by remember { mutableStateOf(false) }
+    var isRecordingRequested by remember { mutableStateOf(false) }
 
     val permissionLauncher = rememberPermissionLauncher(
         onResult = { isGranted ->
             hasAudioPermission = isGranted
+            if (isGranted && isRecordingRequested) {
+                isRecordingRequested = false
+            }
         }
     )
+
+    // Auto-iniciar grabación cuando se otorga permiso después de solicitarlo
+    LaunchedEffect(hasAudioPermission, isRecordingRequested) {
+        if (hasAudioPermission && isRecordingRequested && currentRecordName.isEmpty()) {
+            try {
+                currentRecordName = "nota_voz_${Clock.System.now().toEpochMilliseconds()}.m4a"
+                recorder.startRecording(currentRecordName)
+            } catch (e: Exception) {
+                AppLogger.e("App", "Error al iniciar grabación: ${e.message}")
+                isRecordingRequested = false
+            }
+        }
+    }
 
     // Verificar estado inicial del permiso de audio
     LaunchedEffect(Unit) {
@@ -178,9 +195,11 @@ fun App(repository: ChatRepository) {
                                 } catch (e: Exception) {
                                     AppLogger.e("App", "Error al iniciar grabación: ${e.message}")
                                     hasAudioPermission = false
+                                    isRecordingRequested = true
                                     permissionLauncher.launch()
                                 }
                             } else {
+                                isRecordingRequested = true
                                 permissionLauncher.launch()
                             }
                         },
