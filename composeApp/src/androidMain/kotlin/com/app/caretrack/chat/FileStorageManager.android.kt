@@ -13,4 +13,13 @@ actual class FileStorageManager actual constructor(context: Any?) {
         file.writeBytes(bytes)
         return file.absolutePath
     }
+
+    actual fun deleteFile(path: String): Boolean {
+        return try {
+            File(path).delete()
+        } catch (e: Exception) {
+            AppLogger.e("FileStorage", "Error al eliminar archivo: ${e.message}")
+            false
+        }
+    }
 }

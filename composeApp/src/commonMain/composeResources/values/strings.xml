@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CareTrack</string>
+
+    <!-- Chat screen -->
+    <string name="chat_empty_state">No hay mensajes aún. ¡Comienza una conversación!</string>
+    <string name="chat_input_placeholder">Mensaje...</string>
+    <string name="chat_sending_status">enviando</string>
+    <string name="chat_error_loading">Error al cargar mensajes: %1$s</string>
+    <string name="chat_error_format">Lo siento, el formato .%1$s no es compatible.</string>
+    <string name="chat_error_file_too_large">El archivo excede el límite de 50 MB.</string>
+    <string name="chat_welcome_message">¡Bienvenido a CareTrack! 👋\n¿En qué puedo ayudarte hoy?</string>
+    <string name="chat_error_processing">Error al procesar tu mensaje: %1$s</string>
+
+    <!-- Actions -->
+    <string name="action_attach">Adjuntar</string>
+    <string name="action_send">Enviar</string>
+    <string name="action_record">Grabar</string>
+    <string name="action_stop">Detener</string>
+    <string name="action_play">Reproducir</string>
+    <string name="action_retry">↻</string>
+
+    <!-- File picker titles -->
+    <string name="picker_image">Seleccionar Imagen</string>
+    <string name="picker_audio">Seleccionar Audio</string>
+    <string name="picker_document">Seleccionar Documento</string>
+
+    <!-- Attachment menu labels -->
+    <string name="attachment_image">Imagen</string>
+    <string name="attachment_pdf">PDF</string>
+    <string name="attachment_audio">Audio</string>
+
+    <!-- Image preview -->
+    <string name="preview_title">Vista previa</string>
+    <string name="preview_send">Enviar</string>
+    <string name="preview_cancel">Cancelar</string>
+</resources>

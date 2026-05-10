@@ -26,8 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import caretrack.composeapp.generated.resources.Res
+import caretrack.composeapp.generated.resources.action_attach
+import caretrack.composeapp.generated.resources.action_record
+import caretrack.composeapp.generated.resources.action_send
 import caretrack.composeapp.generated.resources.add_24px
+import caretrack.composeapp.generated.resources.attachment_audio
+import caretrack.composeapp.generated.resources.attachment_image
+import caretrack.composeapp.generated.resources.attachment_pdf
 import caretrack.composeapp.generated.resources.audio_file_24px
+import caretrack.composeapp.generated.resources.chat_input_placeholder
 import caretrack.composeapp.generated.resources.close_24px
 import caretrack.composeapp.generated.resources.image_24px
 import caretrack.composeapp.generated.resources.mic_24px
@@ -35,6 +42,7 @@ import caretrack.composeapp.generated.resources.picture_as_pdf_24px
 import caretrack.composeapp.generated.resources.send_24px
 import caretrack.composeapp.generated.resources.stop_circle_24px
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatInputBar(
@@ -79,7 +87,7 @@ fun ChatInputBar(
                 IconButton(onClick = { showMenu = !showMenu }) {
                     Icon(
                         painter = painterResource(if (showMenu) Res.drawable.close_24px else Res.drawable.add_24px),
-                        contentDescription = "Adjuntar",
+                        contentDescription = stringResource(Res.string.action_attach),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp)
                     )
@@ -90,7 +98,7 @@ fun ChatInputBar(
                     value = textState,
                     onValueChange = { textState = it },
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Mensaje...") },
+                    placeholder = { Text(stringResource(Res.string.chat_input_placeholder)) },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
@@ -111,7 +119,7 @@ fun ChatInputBar(
                     ) {
                         Icon(
                             painter = painterResource(Res.drawable.send_24px),
-                            contentDescription = "Enviar",
+                            contentDescription = stringResource(Res.string.action_send),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -129,7 +137,7 @@ fun ChatInputBar(
                     ) {
                         Icon(
                             painter = painterResource(if (isRecording) Res.drawable.stop_circle_24px else Res.drawable.mic_24px),
-                            contentDescription = "Grabar",
+                            contentDescription = stringResource(Res.string.action_record),
                             tint = if (isRecording) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -152,19 +160,19 @@ fun AttachmentMenu(onSelect: (MessageType) -> Unit) {
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            AttachmentItem(Res.drawable.image_24px, "Imagen", Color(0xFF4CAF50)) {
+            AttachmentItem(Res.drawable.image_24px, stringResource(Res.string.attachment_image), Color(0xFF4CAF50)) {
                 onSelect(
                     MessageType.IMAGE
                 )
             }
             AttachmentItem(
                 Res.drawable.picture_as_pdf_24px,
-                "PDF",
+                stringResource(Res.string.attachment_pdf),
                 Color(0xFFF44336)
             ) { onSelect(MessageType.DOCUMENT) }
             AttachmentItem(
                 Res.drawable.audio_file_24px,
-                "Audio",
+                stringResource(Res.string.attachment_audio),
                 Color(0xFF2196F3)
             ) { onSelect(MessageType.AUDIO) }
         }

@@ -9,20 +9,18 @@ import java.io.File
 actual class AudioRecorder actual constructor(context: Any?) {
     private val androidContext = context as? android.content.Context
     private var recorder: MediaRecorder? = null
-
-    // NUEVO: Variable para almacenar el nombre del archivo en curso
     private var currentRecordedPath: String = ""
+    private var lastAbsolutePath: String = ""
 
+    @Suppress("DEPRECATION")
     actual fun startRecording(path: String) {
-        // Guardamos el nombre del archivo para usarlo al detener la grabación
         currentRecordedPath = path
-
-        // Si el path no es absoluto, lo guardamos en la carpeta interna de la app
         val absolutePath = if (path.startsWith("/")) {
             path
         } else {
             File(androidContext?.filesDir, path).absolutePath
         }
+        lastAbsolutePath = absolutePath
 
         recorder = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             androidContext?.let { MediaRecorder(it) } ?: MediaRecorder()
@@ -33,13 +31,12 @@ actual class AudioRecorder actual constructor(context: Any?) {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            setOutputFile(absolutePath) // Usamos la ruta corregida
+            setOutputFile(absolutePath)
             prepare()
             start()
         }
     }
 
-    // NUEVO: Cambiamos la función para que retorne un String
     actual fun stopRecording(): String {
         try {
             recorder?.apply {
@@ -47,19 +44,16 @@ actual class AudioRecorder actual constructor(context: Any?) {
                 release()
             }
         } catch (e: Exception) {
-            println("CARETRACK_ERROR: Error al detener la grabación -> ${e.message}")
+            AppLogger.e("AudioRecorder", "Error al detener la grabación -> ${e.message}")
         } finally {
             recorder = null
         }
 
-        // Validación de depuración (opcional)
-        val file = File(androidContext?.filesDir, currentRecordedPath)
+        val file = File(lastAbsolutePath)
         if (file.exists()) {
-            println("Validación: Audio guardado correctamente. Tamaño: ${file.length()} bytes en ${file.absolutePath}")
+            AppLogger.d("AudioRecorder", "Audio guardado. Tamaño: ${file.length()} bytes en ${file.absolutePath}")
         }
-
-        // Devolvemos la ruta/nombre que guardamos al iniciar
-        return currentRecordedPath
+        return lastAbsolutePath
     }
 }
 

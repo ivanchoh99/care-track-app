@@ -23,4 +23,14 @@ actual class FileStorageManager actual constructor(context: Any?) {
         data?.writeToFile(filePath, atomically = true)
         return filePath
     }
+
+    actual fun deleteFile(path: String): Boolean {
+        return try {
+            NSFileManager.defaultManager.removeItemAtPath(path, null)
+            true
+        } catch (e: Exception) {
+            AppLogger.e("FileStorage", "Error al eliminar archivo: ${e.message}")
+            false
+        }
+    }
 }

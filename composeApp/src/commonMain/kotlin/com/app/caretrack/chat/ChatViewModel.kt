@@ -39,6 +39,18 @@ class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
         }
     }
 
+    fun deleteMessage(messageId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteMessage(messageId)
+        }
+    }
+
+    fun retryMessage(messageId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.retryMessage(messageId)
+        }
+    }
+
     fun processAndSendFile(
         fileName: String,
         extension: String?,

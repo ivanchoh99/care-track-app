@@ -20,9 +20,21 @@ interface ChatDao {
 
     @Query("SELECT COUNT(*) FROM messages")
     suspend fun getMessageCount(): Int
+
+    @Query("DELETE FROM messages WHERE id = :messageId")
+    suspend fun deleteMessage(messageId: String)
+
+    @Query("SELECT * FROM messages WHERE id = :messageId")
+    suspend fun getMessageById(messageId: String): MessageEntity?
+
+    @Query("UPDATE messages SET status = :status WHERE id = :messageId")
+    suspend fun updateMessageStatus(messageId: String, status: String)
+
+    @Query("UPDATE messages SET backendUrl = :url WHERE id = :messageId")
+    suspend fun updateMessageBackendUrl(messageId: String, url: String)
 }
 
-@Database(entities = [MessageEntity::class], version = 1)
+@Database(entities = [MessageEntity::class], version = 2)
 abstract class ChatDatabase : RoomDatabase() {
     abstract fun chatDao(): ChatDao
 }
@@ -33,7 +45,8 @@ fun getRoomDatabase(
     builder: RoomDatabase.Builder<ChatDatabase>
 ): ChatDatabase {
     return builder
-        .setDriver(BundledSQLiteDriver()) // Importante para KMP
+        .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
+        .fallbackToDestructiveMigration(false)
         .build()
 }

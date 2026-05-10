@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 room {
@@ -15,6 +16,10 @@ room {
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -35,6 +40,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -48,6 +57,13 @@ kotlin {
             implementation("io.github.vinceglb:filekit-compose:0.8.2")
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.coil.compose)
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.content.negotiation)
+            implementation(libs.ktor.serialization)
+            implementation(libs.ktor.websockets)
+            implementation(libs.ktor.logging)
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
