@@ -46,6 +46,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatInputBar(
+    isRecording: Boolean = false,
     onSendMessage: (String) -> Unit,
     onAttachmentSelected: (MessageType) -> Unit,
     onVoiceNoteStart: () -> Unit,
@@ -53,7 +54,6 @@ fun ChatInputBar(
 ) {
     var textState by remember { mutableStateOf("") }
     var showMenu by remember { mutableStateOf(false) }
-    var isRecording by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -128,10 +128,8 @@ fun ChatInputBar(
                         onClick = {
                             if (!isRecording) {
                                 onVoiceNoteStart()
-                                isRecording = true
                             } else {
                                 onVoiceNoteEnd()
-                                isRecording = false
                             }
                         }
                     ) {

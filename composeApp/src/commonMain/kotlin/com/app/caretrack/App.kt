@@ -82,6 +82,7 @@ fun App(repository: ChatRepository) {
     var currentRecordName by remember { mutableStateOf("") }
     var hasAudioPermission by remember { mutableStateOf(false) }
     var isRecordingRequested by remember { mutableStateOf(false) }
+    var isRecording by remember { mutableStateOf(false) }
 
     val permissionLauncher = rememberPermissionLauncher(
         onResult = { isGranted ->
@@ -169,6 +170,7 @@ fun App(repository: ChatRepository) {
                 contentWindowInsets = WindowInsets(0, 0, 0, 0),
                 bottomBar = {
                     ChatInputBar(
+                        isRecording = isRecording,
                         onSendMessage = { text ->
                             chatViewModel.sendMessage(text)
                             scope.launch {
@@ -192,6 +194,7 @@ fun App(repository: ChatRepository) {
                                     currentRecordName =
                                         "nota_voz_${Clock.System.now().toEpochMilliseconds()}.m4a"
                                     recorder.startRecording(currentRecordName)
+                                    isRecording = true
                                 } catch (e: Exception) {
                                     AppLogger.e("App", "Error al iniciar grabación: ${e.message}")
                                     hasAudioPermission = false
@@ -204,7 +207,8 @@ fun App(repository: ChatRepository) {
                             }
                         },
                         onVoiceNoteEnd = {
-                            if (hasAudioPermission) {
+                            if (hasAudioPermission && isRecording) {
+                                isRecording = false
                                 val savedPath = recorder.stopRecording()
                                 chatViewModel.processAndSendFile(
                                     fileName = currentRecordName,

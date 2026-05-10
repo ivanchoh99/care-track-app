@@ -1,6 +1,6 @@
 # CareTrack
 
-Aplicación de chat multiplataforma (Android/iOS) construida con Kotlin Multiplatform y Jetpack Compose. Permite comunicación en tiempo real con soporte multimedia completo: mensajes de texto, notas de voz, imágenes y documentos PDF.
+Asistente de salud familiar multiplataforma (Android/iOS) con interfaz de chat. Permite a familias gestionar el cuidado de sus miembros a través de un chatbot especializado en salud, con soporte multimedia completo: mensajes de texto, notas de voz, imágenes y documentos PDF.
 
 ---
 
@@ -151,6 +151,15 @@ El permiso `RECORD_AUDIO` se solicita en tiempo de ejecución al intentar grabar
 Abrir `/iosApp` en Xcode y ejecutar desde ahí, o usar la configuración de ejecución del IDE.
 
 > Asegúrate de que el servidor backend esté corriendo en el puerto 8080 antes de iniciar la app.
+
+---
+
+## Roadmap
+
+- [ ] Autenticación y gestión de sesiones
+- [ ] Gestión de perfil de usuario
+- [ ] Registro y gestión de pacientes por familia
+- [ ] Administración familiar: miembros y roles (cuidador, paciente, etc.)
 
 ---
 
