@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.caretrack.chat.ChatRepository
-import com.app.caretrack.chat.FileStorageManager
+import com.app.caretrack.media.file.FileStorageManager
 import com.app.caretrack.chat.getRoomDatabase
 import com.app.caretrack.chat.instantiateDatabaseBuilder
 

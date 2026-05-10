@@ -4,6 +4,9 @@ import com.app.caretrack.chat.network.ApiService
 import com.app.caretrack.chat.network.ChatWebSocket
 import com.app.caretrack.chat.network.SendMessageRequest
 import com.app.caretrack.chat.network.WebSocketMessage
+import com.app.caretrack.media.file.FileStorageManager
+import com.app.caretrack.media.file.deleteFileIfExists
+import com.app.caretrack.common.AppLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -54,7 +57,6 @@ class ChatRepository(
             }
 
             "token" -> {
-                // Streaming token - could be used for real-time text display
                 AppLogger.d("WebSocket", "Token recibido: ${msg.content}")
             }
 

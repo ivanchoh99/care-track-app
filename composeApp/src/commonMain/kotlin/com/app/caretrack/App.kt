@@ -55,9 +55,9 @@ import com.app.caretrack.chat.ChatViewModel
 import com.app.caretrack.chat.MessageItem
 import com.app.caretrack.chat.MessageType
 import com.app.caretrack.chat.UiState
-import com.app.caretrack.chat.rememberAudioPlayer
-import com.app.caretrack.chat.rememberAudioRecorder
-import com.app.caretrack.chat.rememberPermissionLauncher
+import com.app.caretrack.media.audio.rememberAudioPlayer
+import com.app.caretrack.media.audio.rememberAudioRecorder
+import com.app.caretrack.common.rememberPermissionLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
 import io.github.vinceglb.filekit.core.extension
@@ -86,19 +86,20 @@ fun App(repository: ChatRepository) {
         }
     )
 
-    var showImagePreview by remember { mutableStateOf(false) }
-    var previewImageBytes by remember { mutableStateOf<ByteArray?>(null) }
-    var previewImageName by remember { mutableStateOf("") }
-
+    // Imagen se envía directamente sin confirmación (selección directa)
     val imageLauncher = rememberFilePickerLauncher(
         type = PickerType.Image,
         title = stringResource(Res.string.picker_image)
     ) { file ->
         file?.let {
             scope.launch(Dispatchers.IO) {
-                previewImageBytes = it.readBytes()
-                previewImageName = it.name
-                showImagePreview = true
+                val bytes = it.readBytes()
+                chatViewModel.processAndSendFile(
+                    fileName = it.name,
+                    extension = it.extension,
+                    type = MessageType.IMAGE,
+                    fileBytes = bytes
+                )
             }
         }
     }
@@ -244,98 +245,6 @@ fun App(repository: ChatRepository) {
                                 }
                             }
                         }
-                    }
-                }
-            }
-
-            if (showImagePreview && previewImageBytes != null) {
-                ImagePreviewOverlay(
-                    imageBytes = previewImageBytes!!,
-                    fileName = previewImageName,
-                    onSend = {
-                        chatViewModel.processAndSendFile(
-                            fileName = previewImageName,
-                            extension = previewImageName.substringAfterLast(".", ""),
-                            type = MessageType.IMAGE,
-                            fileBytes = previewImageBytes
-                        )
-                        showImagePreview = false
-                        previewImageBytes = null
-                        previewImageName = ""
-                    },
-                    onDismiss = {
-                        showImagePreview = false
-                        previewImageBytes = null
-                        previewImageName = ""
-                    }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ImagePreviewOverlay(
-    imageBytes: ByteArray,
-    fileName: String,
-    onSend: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.6f))
-            .clickable { onDismiss() },
-        contentAlignment = Alignment.Center
-    ) {
-        Surface(
-            modifier = Modifier
-                .padding(32.dp)
-                .fillMaxWidth()
-                .clickable(enabled = false) {},
-            shape = RoundedCornerShape(16.dp),
-            tonalElevation = 8.dp
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(Res.string.preview_title),
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-                AsyncImage(
-                    model = imageBytes,
-                    contentDescription = fileName,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Fit
-                )
-
-                Spacer(Modifier.height(8.dp))
-
-                Text(
-                    text = fileName,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                Spacer(Modifier.height(16.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally)
-                ) {
-                    OutlinedButton(onClick = onDismiss) {
-                        Text(stringResource(Res.string.preview_cancel))
-                    }
-                    Button(onClick = onSend) {
-                        Text(stringResource(Res.string.preview_send))
                     }
                 }
             }

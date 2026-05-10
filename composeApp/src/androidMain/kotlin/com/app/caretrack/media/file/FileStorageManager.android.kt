@@ -1,6 +1,9 @@
-package com.app.caretrack.chat
+package com.app.caretrack.media.file
 
 import android.content.Context
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import com.app.caretrack.common.AppLogger
 import java.io.File
 
 actual class FileStorageManager actual constructor(context: Any?) {
@@ -8,7 +11,10 @@ actual class FileStorageManager actual constructor(context: Any?) {
 
     actual fun saveFile(bytes: ByteArray, fileName: String): String {
         val dir = File(appContext?.filesDir, "media")
-        dir.mkdirs()
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+
         val file = File(dir, fileName)
         file.writeBytes(bytes)
         return file.absolutePath
@@ -18,7 +24,7 @@ actual class FileStorageManager actual constructor(context: Any?) {
         return try {
             File(path).delete()
         } catch (e: Exception) {
-            AppLogger.e("FileStorage", "Error al eliminar archivo: ${e.message}")
+            AppLogger.e("FileStorage", "Error deleting file: ${e.message}")
             false
         }
     }

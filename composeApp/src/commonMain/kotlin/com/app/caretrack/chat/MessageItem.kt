@@ -1,6 +1,8 @@
 package com.app.caretrack.chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,7 +36,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import caretrack.composeapp.generated.resources.Res
@@ -44,7 +51,13 @@ import caretrack.composeapp.generated.resources.stop_circle_24px
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import com.app.caretrack.media.audio.AudioPlayer
+import com.app.caretrack.common.AppLogger
 @Composable
 fun MessageItem(
     message: ChatMessage,
@@ -53,6 +66,11 @@ fun MessageItem(
     onRetry: ((String) -> Unit)? = null
 ) {
     val isMine = message.isMine
+
+    // Calcular ancho máximo de burbuja (70% del ancho de pantalla)
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp
+    val maxBubbleWidth = (screenWidthDp * 0.7).dp
 
     val containerColor =
         if (isMine) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
@@ -75,10 +93,11 @@ fun MessageItem(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             horizontalArrangement = if (isMine) Arrangement.End else Arrangement.Start
         ) {
             Surface(
+                modifier = Modifier.widthIn(max = maxBubbleWidth),
                 color = containerColor,
                 shape = if (isMine)
                     RoundedCornerShape(16.dp, 16.dp, 2.dp, 16.dp)
@@ -99,17 +118,61 @@ fun MessageItem(
                         }
 
                         MessageType.DOCUMENT -> {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    painterResource(Res.drawable.picture_as_pdf_24px),
-                                    null,
-                                    tint = contentColor
+                            // Intentar cargar miniatura si existe el archivo local
+                            val pdfFile = message.filePath?.let { path -> 
+                                if (File(path).exists()) File(path) else null 
+                            }
+                            
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(4.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = containerColor.copy(alpha = 0.3f)
                                 )
-                                Text(
-                                    message.content,
-                                    color = contentColor,
-                                    modifier = Modifier.padding(start = 8.dp)
-                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    // Icono grande de PDF o miniatura si está disponible
+                                    Box(
+                                        modifier = Modifier
+                                            .size(48.dp)
+                                            .clip(RoundedCornerShape(4.dp))
+                                            .background(MaterialTheme.colorScheme.errorContainer),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            painterResource(Res.drawable.picture_as_pdf_24px),
+                                            contentDescription = "PDF",
+                                            tint = MaterialTheme.colorScheme.error,
+                                            modifier = Modifier.size(32.dp)
+                                        )
+                                    }
+                                    
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(start = 12.dp)
+                                            .weight(1f)
+                                    ) {
+                                        Text(
+                                            text = message.content,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = contentColor,
+                                            maxLines = 2,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                        // Mostrar tamaño si está disponible
+                                        message.size?.let { size ->
+                                            Text(
+                                                text = size,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = contentColor.copy(alpha = 0.7f)
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -192,11 +255,46 @@ private fun StatusIndicator(message: ChatMessage, onRetry: ((String) -> Unit)?) 
 
 private fun formatTimestamp(millis: Long): String {
     if (millis == 0L) return ""
-    val totalSec = millis / 1000
-    val minutes = (totalSec / 60) % 60
-    val hours = totalSec / 3600
-    return if (hours > 0) "%d:%02d".format(hours, minutes)
-    else "%d min".format(minutes)
+    
+    val now = Calendar.getInstance()
+    val messageTime = Calendar.getInstance().apply { timeInMillis = millis }
+    
+    val today = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    
+    val yesterday = Calendar.getInstance().apply {
+        add(Calendar.DAY_OF_YEAR, -1)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    
+    // Si es hoy, mostrar solo la hora
+    if (messageTime.after(today)) {
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return timeFormat.format(Date(millis))
+    }
+    
+    // Si es ayer, mostrar "Ayer"
+    if (messageTime.after(yesterday)) {
+        return "Ayer"
+    }
+    
+    // Si es de esta semana, mostrar el día
+    val daysDiff = ((today.timeInMillis - messageTime.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
+    if (daysDiff < 7) {
+        val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // Día de la semana
+        return dayFormat.format(Date(millis))
+    }
+    
+    // De lo contrario, mostrar fecha
+    val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+    return dateFormat.format(Date(millis))
 }
 
 @Composable
@@ -233,12 +331,34 @@ fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer) {
                     player.stopAudio()
                     isPlaying = false
                 } else {
-                    val path = message.filePath ?: message.backendUrl
+                    //优先使用本地文件路径，其次才考虑远程URL
+                    val path = message.filePath
                     if (!path.isNullOrBlank()) {
-                        player.playAudio(path)
-                        isPlaying = true
+                        // 验证文件是否存在
+                        if (File(path).exists()) {
+                            player.playAudio(path)
+                            isPlaying = true
+                            AppLogger.d("AudioBubble", "Reproduciendo desde archivo local: $path")
+                        } else {
+                            AppLogger.e("AudioBubble", "Archivo local no encontrado: $path")
+                            // 如果本地文件不存在，尝试使用后端URL
+                            val fallbackPath = message.backendUrl
+                            if (!fallbackPath.isNullOrBlank()) {
+                                player.playAudio(fallbackPath)
+                                isPlaying = true
+                                AppLogger.d("AudioBubble", "Reproduciendo desde URL remota: $fallbackPath")
+                            }
+                        }
                     } else {
-                        AppLogger.e("AudioBubble", "No se encontró archivo de audio")
+                        // 没有本地路径，尝试使用后端URL
+                        val fallbackPath = message.backendUrl
+                        if (!fallbackPath.isNullOrBlank()) {
+                            player.playAudio(fallbackPath)
+                            isPlaying = true
+                            AppLogger.d("AudioBubble", "Reproduciendo desde URL remota: $fallbackPath")
+                        } else {
+                            AppLogger.e("AudioBubble", "No se encontró archivo de audio")
+                        }
                     }
                 }
             }

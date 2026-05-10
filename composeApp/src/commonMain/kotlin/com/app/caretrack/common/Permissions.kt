@@ -1,4 +1,4 @@
-package com.app.caretrack.chat
+package com.app.caretrack.common
 
 import androidx.compose.runtime.Composable
 

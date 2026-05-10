@@ -1,4 +1,4 @@
-package com.app.caretrack.chat
+package com.app.caretrack.common
 
 expect object AppLogger {
     fun e(tag: String, message: String)

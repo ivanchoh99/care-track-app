@@ -1,6 +1,7 @@
-package com.app.caretrack.chat
+package com.app.caretrack.media.audio
 
 import android.media.MediaRecorder
+import com.app.caretrack.common.AppLogger
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext

@@ -1,31 +1,32 @@
-package com.app.caretrack.chat
+package com.app.caretrack.media.audio
 
 import android.media.MediaPlayer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import com.app.caretrack.common.AppLogger
 import java.io.File
 
-actual class AudioPlayer actual constructor(private val context: Any?) {
+actual class AudioPlayer actual constructor(context: Any?) {
     private var mediaPlayer: MediaPlayer? = null
-    private val androidContext = context as android.content.Context
+    private val androidContext = context as? android.content.Context
 
     actual fun playAudio(path: String) {
         stopAudio()
 
         if (path.isBlank()) {
-            AppLogger.e("AudioPlayer", "La ruta del audio está vacía.")
+            AppLogger.e("AudioPlayer", "Audio path is empty.")
             return
         }
         try {
             val file = if (path.startsWith("/")) {
                 File(path)
             } else {
-                File(androidContext.filesDir, path)
+                File(androidContext?.filesDir, path)
             }
 
             if (file.isDirectory) {
-                AppLogger.e("AudioPlayer", "Se intentó reproducir un directorio -> ${file.absolutePath}")
+                AppLogger.e("AudioPlayer", "Attempted to play a directory -> ${file.absolutePath}")
                 return
             }
 
@@ -37,22 +38,22 @@ actual class AudioPlayer actual constructor(private val context: Any?) {
                     setOnCompletionListener { stopAudio() }
                 }
             } else {
-                AppLogger.e("AudioPlayer", "Archivo de audio no existe -> ${file.absolutePath}")
+                AppLogger.e("AudioPlayer", "Audio file does not exist -> ${file.absolutePath}")
             }
 
             mediaPlayer?.setOnErrorListener { _, what, extra ->
-                AppLogger.e("AudioPlayer", "Error nativo MediaPlayer -> what:$what extra:$extra")
+                AppLogger.e("AudioPlayer", "Native MediaPlayer error -> what:$what extra:$extra")
                 true
             }
         } catch (e: Exception) {
-            AppLogger.e("AudioPlayer", "Excepción en playAudio -> ${e.message}")
+            AppLogger.e("AudioPlayer", "Exception in playAudio -> ${e.message}")
         }
     }
 
     actual fun playAudioFromBytes(bytes: ByteArray) {
         stopAudio()
         try {
-            val tempFile = File(androidContext.cacheDir, "caretrack_audio_cache.ogg")
+            val tempFile = File(androidContext?.cacheDir, "caretrack_audio_cache.ogg")
             tempFile.writeBytes(bytes)
 
             mediaPlayer = MediaPlayer().apply {
@@ -62,12 +63,12 @@ actual class AudioPlayer actual constructor(private val context: Any?) {
                 setOnCompletionListener { stopAudio() }
 
                 setOnErrorListener { _, what, extra ->
-                    AppLogger.e("AudioPlayer", "Error reproduciendo bytes -> what:$what extra:$extra")
+                    AppLogger.e("AudioPlayer", "Error playing bytes -> what:$what extra:$extra")
                     true
                 }
             }
         } catch (e: Exception) {
-            AppLogger.e("AudioPlayer", "Excepción reproduciendo bytes -> ${e.message}")
+            AppLogger.e("AudioPlayer", "Exception playing bytes -> ${e.message}")
         }
     }
 

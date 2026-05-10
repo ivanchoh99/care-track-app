@@ -1,5 +1,5 @@
-// Ubicación: composeApp/src/commonMain/kotlin/com/app/caretrack/chat/AudioPlayer.kt
-package com.app.caretrack.chat
+// Ubicación: composeApp/src/commonMain/kotlin/com/app/caretrack/media/audio/AudioPlayer.kt
+package com.app.caretrack.media.audio
 
 import androidx.compose.runtime.Composable
 
