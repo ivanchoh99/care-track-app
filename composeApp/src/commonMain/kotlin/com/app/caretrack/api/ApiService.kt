@@ -1,3 +1,14 @@
+// =============================================================================
+// ⚠️ ARCHIVO DUPLICADO — PENDIENTE DE ELIMINAR
+// =============================================================================
+// Este archivo es una copia de `chat/network/ApiService.kt` con un paquete
+// diferente (`com.app.caretrack.api` vs `com.app.caretrack.chat.network`).
+// El código activo usa el paquete `chat.network`. Este archivo debería
+// eliminarse para evitar confusión y código muerto.
+//
+// TODO: Eliminar este archivo. El código activo está en:
+//       composeApp/src/commonMain/.../chat/network/ApiService.kt
+// =============================================================================
 package com.app.caretrack.api
 
 import io.ktor.client.HttpClient

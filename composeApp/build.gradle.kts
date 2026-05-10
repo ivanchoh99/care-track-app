@@ -64,6 +64,8 @@ kotlin {
             implementation(libs.ktor.websockets)
             implementation(libs.ktor.logging)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.navigation.compose)
+            implementation(libs.datastore.preferences)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

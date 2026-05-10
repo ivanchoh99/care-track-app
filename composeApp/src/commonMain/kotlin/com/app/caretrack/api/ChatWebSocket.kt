@@ -1,3 +1,10 @@
+// =============================================================================
+// ⚠️ ARCHIVO DUPLICADO — PENDIENTE DE ELIMINAR
+// =============================================================================
+// Este archivo es una copia de `chat/network/ChatWebSocket.kt`.
+// TODO: Eliminar este archivo. El código activo está en:
+//       composeApp/src/commonMain/.../chat/network/ChatWebSocket.kt
+// =============================================================================
 package com.app.caretrack.api
 
 import io.ktor.websocket.Frame

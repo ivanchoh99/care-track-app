@@ -1,12 +1,15 @@
-Ahora esta funcionando la reproducción sin embargo acabo de encontrar un pequeño bug:
+Quiero que generes un plan de desarrollo detallado (Que y Como) y tecnico (Patrones de disño,
+metodologia y tecnologias) el cual cumpla con las siguientes
+funciones y caracteristicas:
 
-1. Instalo la app
-2. Presiono grabar nota de voz
-3. app solicita permisos de dispositivo
-4. acepto permisos
-5. el boton de record quedo activo pero no se esta grabando nada
-6. presiono el boton de record para finalizar porque esta con la imagen de finalizar pero no se
-   grabo nada
-7. se ve una nota de voz en el chat pero no tiene ni encuentra ningun audio para reproducir
-8. vuelvo a grabar una nota de voz presionando el boton con icono de microfono....funciona
-   correctamente de aqui en adelante
+1. Login para usuarios, teniendo en cuenta el rol para renderizado de menus segun el rol
+2. un menu lateral estilo hamburger menu el cual sea dinamico dependiendo del rol del usuario
+3. Seccion para editar información del perfil del usuario
+4. Secciones de creación, edicion y/o administración para lo siguiente:
+    - Perfil
+    - Familias -> Administrador de Familias
+    - Pacientes dentro de una familia -> Administradores de familia
+    - Miembros de una familia (el rol de la familia) -> Administradores de familia
+5. La posibilidad de invitar miembros a una familia
+7. Los usuarios si estan en mas de una familia el poder seleccionar la familia para definir el
+   contexto a trabajar

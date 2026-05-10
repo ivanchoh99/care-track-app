@@ -4,14 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import com.app.caretrack.auth.data.SessionManager
 import com.app.caretrack.chat.ChatRepository
-import com.app.caretrack.media.file.FileStorageManager
 import com.app.caretrack.chat.getRoomDatabase
 import com.app.caretrack.chat.instantiateDatabaseBuilder
+import com.app.caretrack.media.file.FileStorageManager
+import com.app.caretrack.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,26 +20,20 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val context = LocalContext.current
+            
             val repository = remember {
                 val builder = instantiateDatabaseBuilder(context)
                 val database = getRoomDatabase(builder)
                 val fileManager = FileStorageManager(context)
                 ChatRepository(database.chatDao(), fileManager)
             }
-            App(repository = repository)
+
+            val sessionManager = remember { SessionManager() }
+
+            AppNavigation(
+                sessionManager = sessionManager,
+                repository = repository
+            )
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    val context = LocalContext.current
-    val repository = remember {
-        val builder = instantiateDatabaseBuilder(context)
-        val database = getRoomDatabase(builder)
-        val fileManager = FileStorageManager(context)
-        ChatRepository(database.chatDao(), fileManager)
-    }
-    App(repository = repository)
 }

@@ -1,3 +1,10 @@
+// =============================================================================
+// ⚠️ ARCHIVO DUPLICADO — PENDIENTE DE ELIMINAR
+// =============================================================================
+// Este archivo es una copia de `chat/network/ApiModels.kt`.
+// TODO: Eliminar este archivo. El código activo está en:
+//       composeApp/src/commonMain/.../chat/network/ApiModels.kt
+// =============================================================================
 package com.app.caretrack.api
 
 import kotlinx.serialization.SerialName
