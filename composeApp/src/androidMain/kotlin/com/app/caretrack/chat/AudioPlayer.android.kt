@@ -13,23 +13,40 @@ actual class AudioPlayer actual constructor(private val context: Any?) {
     // 1. NOTAS DE VOZ (Restaurado a la versión directa que te funcionaba perfecto)
     actual fun playAudio(path: String) {
         stopAudio()
-        try {
-            mediaPlayer = MediaPlayer().apply {
-                val file = File(androidContext.filesDir, path)
 
-                if (file.exists()) {
+        if (path.isBlank()) {
+            println("CARETRACK_ERROR: La ruta del audio está vacía.")
+            return
+        }
+        try {
+            // Si la ruta ya es absoluta (ej. /data/user/0/...), la usamos.
+            // Si es solo el nombre (ej. nota.m4a), le agregamos la carpeta filesDir.
+            val file = if (path.startsWith("/")) {
+                File(path)
+            } else {
+                File(androidContext.filesDir, path)
+            }
+
+            // Segunda protección: Validar que no sea un directorio
+            if (file.isDirectory) {
+                println("CARETRACK_ERROR: Se intentó reproducir un directorio -> ${file.absolutePath}")
+                return
+            }
+
+            if (file.exists()) {
+                mediaPlayer = MediaPlayer().apply {
                     setDataSource(file.absolutePath)
                     prepare()
                     start()
                     setOnCompletionListener { stopAudio() }
-                } else {
-                    println("CARETRACK_ERROR: Nota de voz no existe -> ${file.absolutePath}")
                 }
+            } else {
+                println("CARETRACK_ERROR: Archivo de audio no existe -> ${file.absolutePath}")
+            }
 
-                setOnErrorListener { _, what, extra ->
-                    println("CARETRACK_ERROR: Error nativo MediaPlayer -> what:$what extra:$extra")
-                    true
-                }
+            mediaPlayer?.setOnErrorListener { _, what, extra ->
+                println("CARETRACK_ERROR: Error nativo MediaPlayer -> what:$what extra:$extra")
+                true
             }
         } catch (e: Exception) {
             println("CARETRACK_ERROR: Excepción en playAudio -> ${e.message}")

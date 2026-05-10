@@ -17,6 +17,9 @@ interface ChatDao {
 
     @Insert
     suspend fun insertMessage(message: MessageEntity)
+
+    @Query("SELECT COUNT(*) FROM messages")
+    suspend fun getMessageCount(): Int
 }
 
 @Database(entities = [MessageEntity::class], version = 1)

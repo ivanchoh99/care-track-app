@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.caretrack.chat.ChatRepository
+import com.app.caretrack.chat.FileStorageManager
 import com.app.caretrack.chat.getRoomDatabase
 import com.app.caretrack.chat.instantiateDatabaseBuilder
 
@@ -18,11 +20,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val context = LocalContext.current
-            val database = remember {
+            val repository = remember {
                 val builder = instantiateDatabaseBuilder(context)
-                getRoomDatabase(builder)
+                val database = getRoomDatabase(builder)
+                val fileManager = FileStorageManager(context)
+                ChatRepository(database.chatDao(), fileManager)
             }
-            App(dao = database.chatDao())
+            App(repository = repository)
         }
     }
 }
@@ -31,9 +35,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppAndroidPreview() {
     val context = LocalContext.current
-    val database = remember {
+    val repository = remember {
         val builder = instantiateDatabaseBuilder(context)
-        getRoomDatabase(builder)
+        val database = getRoomDatabase(builder)
+        val fileManager = FileStorageManager(context)
+        ChatRepository(database.chatDao(), fileManager)
     }
-    App(database.chatDao())
+    App(repository = repository)
 }

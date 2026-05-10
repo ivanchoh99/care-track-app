@@ -6,61 +6,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlin.time.Clock
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
-@OptIn(ExperimentalUuidApi::class)
-class ChatViewModel(private val dao: ChatDao) : ViewModel() {
+class ChatViewModel(private val repository: ChatRepository) : ViewModel() {
 
     companion object {
-        val VALID_AUDIO_EXT = listOf("mp3", "wav", "m4a", "ogg", "acc", "flac", "opus")
-        val VALID_IMAGE_EXT = listOf("jpg", "jpeg", "png", "webp")
+        val VALID_AUDIO_EXT = ChatRepository.VALID_AUDIO_EXT
+        val VALID_IMAGE_EXT = ChatRepository.VALID_IMAGE_EXT
     }
 
-    val messages: StateFlow<List<ChatMessage>> = dao.getAllMessages()
-        .map { entities ->
-            if (entities.isEmpty()) {
-                insertWelcomeMessage()
-                emptyList()
-            } else {
-                entities.map { it.toChatMessage() }
-            }
-        }
+    val uiState: StateFlow<UiState<List<ChatMessage>>> = repository.messages
+        .map { UiState.Success(it) as UiState<List<ChatMessage>> }
+        .catch { e -> emit(UiState.Error("Error al cargar mensajes: ${e.message}")) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
+            initialValue = UiState.Loading
         )
 
-    private fun insertWelcomeMessage() {
+    init {
         viewModelScope.launch(Dispatchers.IO) {
-            val welcome = MessageEntity(
-                id = Uuid.generateV7().toString(),
-                content = "¡Bienvenido a CareTrack! 👋\n¿En qué puedo ayudarte hoy?",
-                type = MessageType.TEXT.name,
-                isMine = false,
-                timestamp = Clock.System.now().toEpochMilliseconds()
-            )
-            dao.insertMessage(welcome)
+            repository.ensureWelcomeMessage()
         }
     }
 
     fun sendMessage(text: String) {
-        if (text.isBlank()) return
         viewModelScope.launch(Dispatchers.IO) {
-            val userMessage = MessageEntity(
-                id = Uuid.generateV7().toString(),
-                content = text,
-                type = MessageType.TEXT.name,
-                isMine = true,
-                timestamp = Clock.System.now().toEpochMilliseconds()
-            )
-            dao.insertMessage(userMessage)
-            generateBotResponse("Entendido, he guardado tu mensaje.")
+            repository.sendMessage(text)
         }
     }
 
@@ -71,54 +46,14 @@ class ChatViewModel(private val dao: ChatDao) : ViewModel() {
         filePath: String? = null,
         fileBytes: ByteArray? = null
     ) {
-        val ext = extension?.lowercase() ?: fileName.substringAfterLast(".", "").lowercase()
-        val isAllowed = when (type) {
-            MessageType.IMAGE -> VALID_IMAGE_EXT.contains(ext)
-            MessageType.DOCUMENT -> ext == "pdf"
-            MessageType.AUDIO -> VALID_AUDIO_EXT.contains(ext)
-            else -> false
-        }
-
         viewModelScope.launch(Dispatchers.IO) {
-            if (isAllowed) {
-                val entity = MessageEntity(
-                    id = Uuid.generateV7().toString(),
-                    content = fileName,
-                    type = type.name,
-                    isMine = true,
-                    timestamp = Clock.System.now().toEpochMilliseconds(),
-                    fileName = fileName,
-                    extension = ext,
-                    filePath = filePath // Se guarda en Room permanentemente
-                )
-                dao.insertMessage(entity)
-                generateBotResponse("He recibido tu archivo: $fileName")
-            } else {
-                generateBotResponse("Lo siento, el formato .$ext no es compatible.")
-            }
+            repository.processAndSendFile(
+                fileName = fileName,
+                extension = extension,
+                type = type,
+                filePath = filePath,
+                fileBytes = fileBytes
+            )
         }
     }
-
-    private suspend fun generateBotResponse(text: String) {
-        val botMessage = MessageEntity(
-            id = Uuid.generateV7().toString(),
-            content = text,
-            type = MessageType.TEXT.name,
-            isMine = false,
-            timestamp = Clock.System.now().toEpochMilliseconds()
-        )
-        dao.insertMessage(botMessage)
-    }
-
-    // Convertimos la Entidad de BD a un Modelo que la vista pueda leer
-    private fun MessageEntity.toChatMessage() = ChatMessage(
-        id = this.id,
-        content = this.content,
-        type = MessageType.valueOf(this.type),
-        isMine = this.isMine,
-        fileName = this.fileName,
-        extension = this.extension,
-        size = this.size,
-        filePath = this.filePath
-    )
 }
