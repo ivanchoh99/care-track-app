@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import kotlinx.coroutines.delay
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -317,47 +318,71 @@ fun AudioMessageBubble(message: ChatMessage, player: AudioPlayer) {
                     seconds = current / 1000
                 }
             } else {
-                isPlaying = false
-                progress = 0f
-                seconds = 0
+                // Verificar si terminó la reproducción
+                val duration = player.getDuration()
+                if (duration > 0 && progress >= 0.99f) {
+                    // La reproducción terminó naturalmente
+                    isPlaying = false
+                    progress = 0f
+                    seconds = 0
+                } else if (!player.isPlaying() && progress > 0f) {
+                    // Se detuvo por alguna razón
+                    isPlaying = false
+                    progress = 0f
+                    seconds = 0
+                }
             }
+            delay(100) // Actualizar UI cada 100ms para evitar bloqueos
         }
     }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(
             onClick = {
+                AppLogger.d("AudioBubble", "Botón presionado - isPlaying: $isPlaying")
+                
                 if (isPlaying) {
+                    AppLogger.d("AudioBubble", "Deteniendo reproducción...")
                     player.stopAudio()
                     isPlaying = false
+                    progress = 0f
+                    seconds = 0
                 } else {
-                    //优先使用本地文件路径，其次才考虑远程URL
+                    // Priorizar archivo local sobre URL del backend
                     val path = message.filePath
+                    AppLogger.d("AudioBubble", "message.filePath: $path")
+                    AppLogger.d("AudioBubble", "message.backendUrl: ${message.backendUrl}")
+                    
                     if (!path.isNullOrBlank()) {
-                        // 验证文件是否存在
-                        if (File(path).exists()) {
+                        val audioFile = File(path)
+                        AppLogger.d("AudioBubble", "Verificando archivo local - existe: ${audioFile.exists()}, tamaño: ${audioFile.length()} bytes")
+                        
+                        if (audioFile.exists()) {
                             player.playAudio(path)
                             isPlaying = true
                             AppLogger.d("AudioBubble", "Reproduciendo desde archivo local: $path")
                         } else {
-                            AppLogger.e("AudioBubble", "Archivo local no encontrado: $path")
-                            // 如果本地文件不存在，尝试使用后端URL
+                            AppLogger.w("AudioBubble", "Archivo local NO existe: $path")
+                            // Fallback a URL del backend si archivo local no existe
                             val fallbackPath = message.backendUrl
                             if (!fallbackPath.isNullOrBlank()) {
+                                AppLogger.d("AudioBubble", "Intentando con URL del backend: $fallbackPath")
                                 player.playAudio(fallbackPath)
                                 isPlaying = true
-                                AppLogger.d("AudioBubble", "Reproduciendo desde URL remota: $fallbackPath")
+                            } else {
+                                AppLogger.e("AudioBubble", "No hay URL de backend disponible")
                             }
                         }
                     } else {
-                        // 没有本地路径，尝试使用后端URL
+                        // No hay path local, intentar con backendUrl
+                        AppLogger.d("AudioBubble", "No hay filePath, intentando con backendUrl")
                         val fallbackPath = message.backendUrl
                         if (!fallbackPath.isNullOrBlank()) {
                             player.playAudio(fallbackPath)
                             isPlaying = true
                             AppLogger.d("AudioBubble", "Reproduciendo desde URL remota: $fallbackPath")
                         } else {
-                            AppLogger.e("AudioBubble", "No se encontró archivo de audio")
+                            AppLogger.e("AudioBubble", "No se encontró archivo de audio - filePath y backendUrl son nulos")
                         }
                     }
                 }

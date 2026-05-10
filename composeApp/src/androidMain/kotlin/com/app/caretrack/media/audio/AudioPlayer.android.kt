@@ -18,12 +18,18 @@ actual class AudioPlayer actual constructor(context: Any?) {
             AppLogger.e("AudioPlayer", "Audio path is empty.")
             return
         }
+        
+        AppLogger.d("AudioPlayer", "Intentando reproducir audio - path: $path")
+        
         try {
             val file = if (path.startsWith("/")) {
                 File(path)
             } else {
                 File(androidContext?.filesDir, path)
             }
+
+            AppLogger.d("AudioPlayer", "Archivo resolved path: ${file.absolutePath}")
+            AppLogger.d("AudioPlayer", "Archivo existe: ${file.exists()}, tamaño: ${file.length()} bytes")
 
             if (file.isDirectory) {
                 AppLogger.e("AudioPlayer", "Attempted to play a directory -> ${file.absolutePath}")
@@ -33,20 +39,29 @@ actual class AudioPlayer actual constructor(context: Any?) {
             if (file.exists()) {
                 mediaPlayer = MediaPlayer().apply {
                     setDataSource(file.absolutePath)
-                    prepare()
-                    start()
-                    setOnCompletionListener { stopAudio() }
+                    // Usar prepareAsync() para no bloquear el hilo principal
+                    setOnPreparedListener {
+                        AppLogger.d("AudioPlayer", "MediaPlayer preparado, iniciando reproducción")
+                        start()
+                    }
+                    setOnCompletionListener { 
+                        AppLogger.d("AudioPlayer", "Reproducción completada")
+                        stopAudio() 
+                    }
+                    setOnErrorListener { _, what, extra ->
+                        AppLogger.e("AudioPlayer", "MediaPlayer error - what:$what extra:$extra")
+                        stopAudio()
+                        true
+                    }
+                    prepareAsync()  // No bloquea el hilo principal
                 }
+                AppLogger.d("AudioPlayer", "prepareAsync() iniciado para: ${file.absolutePath}")
             } else {
                 AppLogger.e("AudioPlayer", "Audio file does not exist -> ${file.absolutePath}")
             }
-
-            mediaPlayer?.setOnErrorListener { _, what, extra ->
-                AppLogger.e("AudioPlayer", "Native MediaPlayer error -> what:$what extra:$extra")
-                true
-            }
         } catch (e: Exception) {
-            AppLogger.e("AudioPlayer", "Exception in playAudio -> ${e.message}")
+            AppLogger.e("AudioPlayer", "Exception in playAudio: ${e.message}")
+            e.printStackTrace()
         }
     }
 
@@ -58,14 +73,13 @@ actual class AudioPlayer actual constructor(context: Any?) {
 
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(tempFile.absolutePath)
-                prepare()
-                start()
+                setOnPreparedListener { start() }
                 setOnCompletionListener { stopAudio() }
-
                 setOnErrorListener { _, what, extra ->
                     AppLogger.e("AudioPlayer", "Error playing bytes -> what:$what extra:$extra")
                     true
                 }
+                prepareAsync()  // No bloquea el hilo principal
             }
         } catch (e: Exception) {
             AppLogger.e("AudioPlayer", "Exception playing bytes -> ${e.message}")
