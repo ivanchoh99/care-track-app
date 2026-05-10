@@ -4,22 +4,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-
-enum class Role(val label: String, val value: Int) {
-    SYSTEM_ADMIN("Administrador del Sistema", 1),
-    FAMILY_ADMIN("Administrador de Familia", 2),
-    CAREGIVER("Cuidador", 3),
-    VIEWER("Observador", 4);
-
-    companion object {
-        fun fromValue(value: Int): Role? = entries.find { it.value == value }
-    }
-}
+import com.app.caretrack.auth.model.Role
 
 sealed class DrawerItem(
     val route: String,
     val title: String,
-    val roles: List<Role> = Role.entries
+    val roles: List<Role> = Role.entries.toList()
 ) {
     data object Chat : DrawerItem(
         route = Screen.Chat.route,

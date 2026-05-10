@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,8 +19,11 @@ import com.app.caretrack.auth.data.AuthRepository
 import com.app.caretrack.auth.data.SessionManager
 import com.app.caretrack.auth.ui.LoginScreen
 import com.app.caretrack.auth.ui.LoginViewModel
+import com.app.caretrack.auth.model.Role
 import com.app.caretrack.chat.ChatRepository
 import com.app.caretrack.chat.ChatScreen
+import com.app.caretrack.family.data.FamilyContext
+import com.app.caretrack.family.ui.FamilySelectorScreen
 import com.app.caretrack.theme.CareTrackTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -27,15 +31,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun AppNavigation(
     sessionManager: SessionManager,
     authRepository: AuthRepository,
+    familyContext: FamilyContext,
     repository: ChatRepository
 ) {
     val navController = rememberNavController()
     val session by sessionManager.session.collectAsState()
+    val families by familyContext.userFamilies.collectAsState()
+    val selectedFamily by familyContext.selectedFamily.collectAsState()
+    val activeRole by familyContext.activeRole.collectAsState()
+
+    LaunchedEffect(session) {
+        if (session != null) {
+            familyContext.loadUserFamilies()
+        }
+    }
 
     CareTrackTheme {
         NavHost(
             navController = navController,
-            startDestination = if (session != null) Screen.Chat.route else Screen.Login.route
+            startDestination = if (session != null) Screen.FamilySelector.route else Screen.Login.route
         ) {
             composable(Screen.Login.route) {
                 val loginViewModel: LoginViewModel = viewModel {
@@ -44,8 +58,25 @@ fun AppNavigation(
                 LoginScreen(
                     viewModel = loginViewModel,
                     onLoginSuccess = {
+                        if (families.size > 1) {
+                            navController.navigate(Screen.FamilySelector.route) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
+                            }
+                        } else {
+                            navController.navigate(Screen.Chat.route) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
+                            }
+                        }
+                    }
+                )
+            }
+
+            composable(Screen.FamilySelector.route) {
+                FamilySelectorScreen(
+                    familyContext = familyContext,
+                    onFamilySelected = {
                         navController.navigate(Screen.Chat.route) {
-                            popUpTo(Screen.Login.route) { inclusive = true }
+                            popUpTo(Screen.FamilySelector.route) { inclusive = true }
                         }
                     }
                 )
@@ -55,9 +86,9 @@ fun AppNavigation(
                 ChatScreenWithDrawer(
                     navController = navController,
                     repository = repository,
-                    activeRole = Role.FAMILY_ADMIN,
-                    familyCount = 1,
-                    familyName = "Mi Familia"
+                    activeRole = activeRole,
+                    familyCount = families.size,
+                    familyName = selectedFamily?.name
                 )
             }
 

@@ -14,6 +14,7 @@ import com.app.caretrack.chat.ChatRepository
 import com.app.caretrack.chat.getRoomDatabase
 import com.app.caretrack.chat.instantiateDatabaseBuilder
 import com.app.caretrack.chat.network.ApiService
+import com.app.caretrack.family.data.createFamilyContextManager
 import com.app.caretrack.media.file.FileStorageManager
 import com.app.caretrack.navigation.AppNavigation
 
@@ -33,11 +34,12 @@ class MainActivity : ComponentActivity() {
             }
 
             val sessionManager = remember { SessionManager() }
-            
             val apiService = remember { ApiService() }
-            
             val tokenStore = remember {
                 createTokenStore().also { it.initialize(context) }
+            }
+            val familyContext = remember {
+                createFamilyContextManager(context)
             }
             
             val authRepository = remember {
@@ -51,6 +53,7 @@ class MainActivity : ComponentActivity() {
             AppNavigation(
                 sessionManager = sessionManager,
                 authRepository = authRepository,
+                familyContext = familyContext,
                 repository = repository
             )
         }
