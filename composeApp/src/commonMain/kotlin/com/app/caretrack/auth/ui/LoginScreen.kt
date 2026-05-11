@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -40,13 +41,12 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val emailError by viewModel.emailError.collectAsState()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     LaunchedEffect(uiState) {
-        if (uiState is LoginUiState.Success) {
-            onLoginSuccess()
-        }
+        if (uiState is LoginUiState.Success) onLoginSuccess()
     }
 
     Surface(
@@ -80,12 +80,25 @@ fun LoginScreen(
 
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {
+                    email = it
+                    viewModel.clearEmailError()
+                },
                 label = { Text("Correo electrónico") },
                 placeholder = { Text("ejemplo@correo.com") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && email.isNotBlank()) {
+                            viewModel.validateEmail(email)
+                        }
+                    },
+                isError = emailError != null,
+                supportingText = emailError?.let { err ->
+                    { Text(err, color = MaterialTheme.colorScheme.error) }
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -105,7 +118,8 @@ fun LoginScreen(
 
             Button(
                 onClick = { viewModel.login(email.trim(), password) },
-                enabled = email.isNotBlank() && password.isNotBlank() && uiState !is LoginUiState.Loading,
+                enabled = email.isNotBlank() && password.isNotBlank() &&
+                        emailError == null && uiState !is LoginUiState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 if (uiState is LoginUiState.Loading) {

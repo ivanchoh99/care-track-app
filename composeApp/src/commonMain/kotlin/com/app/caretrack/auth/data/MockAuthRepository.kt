@@ -1,6 +1,7 @@
 package com.app.caretrack.auth.data
 
 import com.app.caretrack.auth.model.AuthTokens
+import com.app.caretrack.auth.model.TypeDocument
 import com.app.caretrack.auth.model.UserSession
 import com.app.caretrack.common.mock.MockData
 import kotlinx.coroutines.delay
@@ -14,18 +15,29 @@ class MockAuthRepository(
     override val isLoggedIn: Boolean get() = sessionManager.isLoggedIn
 
     override suspend fun register(
-        name: String,
+        firstName: String,
+        lastName: String,
         email: String,
         password: String,
+        phone: Long,
+        typeDocument: TypeDocument,
+        document: String,
         invitationCode: String?
     ): Result<UserSession> {
         delay(800)
-        if (name.isBlank() || email.isBlank() || password.isBlank()) {
+        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
             return Result.failure(Exception("Todos los campos son obligatorios."))
         }
         val tokens = AuthTokens("mock-access-token", "mock-refresh-token", Long.MAX_VALUE)
         val userSession = UserSession(
-            user = MockData.user.copy(firstName = name, email = email),
+            user = MockData.user.copy(
+                firstName = firstName,
+                lastName = lastName,
+                email = email,
+                phone = phone,
+                typeDocument = typeDocument,
+                document = document
+            ),
             tokens = tokens
         )
         sessionManager.setSession(userSession)
@@ -33,7 +45,7 @@ class MockAuthRepository(
     }
 
     override suspend fun login(email: String, password: String): Result<UserSession> {
-        delay(800) // Simula la latencia de una llamada de red real
+        delay(800)
         return if (email.trim() == MockData.MOCK_EMAIL && password == MockData.MOCK_PASSWORD) {
             val tokens = AuthTokens(
                 accessToken = "mock-access-token",

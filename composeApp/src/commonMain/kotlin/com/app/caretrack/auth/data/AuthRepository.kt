@@ -12,7 +12,16 @@ interface AuthRepository {
     val isLoggedIn: Boolean
 
     suspend fun login(email: String, password: String): Result<UserSession>
-    suspend fun register(name: String, email: String, password: String, invitationCode: String?): Result<UserSession>
+    suspend fun register(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        phone: Long,
+        typeDocument: com.app.caretrack.auth.model.TypeDocument,
+        document: String,
+        invitationCode: String?
+    ): Result<UserSession>
     suspend fun logout()
     suspend fun refreshToken(): Result<AuthTokens>
     suspend fun restoreSession(): Boolean
@@ -27,7 +36,16 @@ class AuthRepositoryImpl(
     override val session: StateFlow<UserSession?> = sessionManager.session
     override val isLoggedIn: Boolean get() = sessionManager.isLoggedIn
     
-    override suspend fun register(name: String, email: String, password: String, invitationCode: String?): Result<UserSession> {
+    override suspend fun register(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        phone: Long,
+        typeDocument: com.app.caretrack.auth.model.TypeDocument,
+        document: String,
+        invitationCode: String?
+    ): Result<UserSession> {
         return Result.failure(NotImplementedError("register not implemented in real backend yet"))
     }
 

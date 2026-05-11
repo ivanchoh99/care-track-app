@@ -18,8 +18,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -43,20 +46,21 @@ fun ProfileScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val formErrors by viewModel.formErrors.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
     var documentExpanded by remember { mutableStateOf(false) }
-    
-    LaunchedEffect(uiState) {
-        if (uiState is ProfileUiState.Saved) {
-            viewModel.resetSavedState()
+
+    LaunchedEffect(Unit) {
+        viewModel.savedEvent.collect {
+            snackbarHostState.showSnackbar("Perfil guardado exitosamente")
         }
     }
-    
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Mi Perfil") }
-            )
+            TopAppBar(title = { Text("Mi Perfil") })
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier
     ) { paddingValues ->
         when (val state = uiState) {
@@ -71,7 +75,7 @@ fun ProfileScreen(
                     CircularProgressIndicator()
                 }
             }
-            
+
             is ProfileUiState.Error -> {
                 Column(
                     modifier = Modifier
@@ -90,7 +94,7 @@ fun ProfileScreen(
                     }
                 }
             }
-            
+
             is ProfileUiState.Saving -> {
                 Column(
                     modifier = Modifier
@@ -104,19 +108,7 @@ fun ProfileScreen(
                     Text("Guardando...")
                 }
             }
-            
-            is ProfileUiState.Saved -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text("Perfil guardado exitosamente")
-                }
-            }
-            
+
             is ProfileUiState.Success -> {
                 Column(
                     modifier = Modifier
@@ -130,41 +122,57 @@ fun ProfileScreen(
                         text = "Información Personal",
                         style = MaterialTheme.typography.titleMedium
                     )
-                    
+
                     OutlinedTextField(
                         value = viewModel.firstName,
                         onValueChange = { viewModel.firstName = it },
                         label = { Text("Nombre") },
                         modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
+                        singleLine = true,
+                        isError = formErrors.firstNameError != null,
+                        supportingText = formErrors.firstNameError?.let { err ->
+                            { Text(err, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-                    
+
                     OutlinedTextField(
                         value = viewModel.lastName,
                         onValueChange = { viewModel.lastName = it },
                         label = { Text("Apellido") },
                         modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
+                        singleLine = true,
+                        isError = formErrors.lastNameError != null,
+                        supportingText = formErrors.lastNameError?.let { err ->
+                            { Text(err, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-                    
+
                     OutlinedTextField(
                         value = viewModel.email,
                         onValueChange = { viewModel.email = it },
                         label = { Text("Email") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        isError = formErrors.emailError != null,
+                        supportingText = formErrors.emailError?.let { err ->
+                            { Text(err, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-                    
+
                     OutlinedTextField(
                         value = viewModel.phone,
                         onValueChange = { viewModel.phone = it },
                         label = { Text("Teléfono") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                        isError = formErrors.phoneError != null,
+                        supportingText = formErrors.phoneError?.let { err ->
+                            { Text(err, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-                    
+
                     ExposedDropdownMenuBox(
                         expanded = documentExpanded,
                         onExpandedChange = { documentExpanded = !documentExpanded },
@@ -180,7 +188,6 @@ fun ProfileScreen(
                                 .menuAnchor()
                                 .fillMaxWidth()
                         )
-                        
                         ExposedDropdownMenu(
                             expanded = documentExpanded,
                             onDismissRequest = { documentExpanded = false }
@@ -196,33 +203,37 @@ fun ProfileScreen(
                             }
                         }
                     }
-                    
+
                     OutlinedTextField(
                         value = viewModel.document,
                         onValueChange = { viewModel.document = it },
                         label = { Text("Número de Documento") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        isError = formErrors.documentError != null,
+                        supportingText = formErrors.documentError?.let { err ->
+                            { Text(err, color = MaterialTheme.colorScheme.error) }
+                        }
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Button(
+                        OutlinedButton(
                             onClick = onNavigateBack,
                             modifier = Modifier.weight(1f)
                         ) {
                             Text("Cancelar")
                         }
-                        
+
                         Button(
                             onClick = { viewModel.saveProfile() },
                             modifier = Modifier.weight(1f),
-                            enabled = state !is ProfileUiState.Saving
+                            enabled = !formErrors.hasErrors
                         ) {
                             Text("Guardar")
                         }

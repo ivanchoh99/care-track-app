@@ -15,6 +15,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -31,6 +32,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.app.caretrack.family.model.FamilyPlan
 
+private const val NAME_MAX_LENGTH = 50
+private const val NAME_MIN_LENGTH = 3
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FamilyFormScreen(
@@ -43,9 +47,20 @@ fun FamilyFormScreen(
     var plan by remember { mutableStateOf(FamilyPlan.FREE) }
     var isActive by remember { mutableStateOf(true) }
     var planExpanded by remember { mutableStateOf(false) }
-    
+
     val isEditing = familyId != null
-    
+
+    val nameError: String? = when {
+        name.isNotBlank() && name.trim().length < NAME_MIN_LENGTH ->
+            "Mínimo $NAME_MIN_LENGTH caracteres"
+        name.length > NAME_MAX_LENGTH ->
+            "Máximo $NAME_MAX_LENGTH caracteres"
+        else -> null
+    }
+
+    val canSave = name.trim().length >= NAME_MIN_LENGTH &&
+            name.length <= NAME_MAX_LENGTH && nameError == null
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,12 +84,32 @@ fun FamilyFormScreen(
         ) {
             OutlinedTextField(
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = { if (it.length <= NAME_MAX_LENGTH) name = it },
                 label = { Text("Nombre de la Familia") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                isError = nameError != null,
+                supportingText = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        if (nameError != null) {
+                            Text(nameError, color = MaterialTheme.colorScheme.error)
+                        } else {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                        Text(
+                            text = "${name.length}/$NAME_MAX_LENGTH",
+                            color = if (name.length >= NAME_MAX_LENGTH)
+                                MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
             )
-            
+
             ExposedDropdownMenuBox(
                 expanded = planExpanded,
                 onExpandedChange = { planExpanded = !planExpanded },
@@ -90,7 +125,6 @@ fun FamilyFormScreen(
                         .menuAnchor()
                         .fillMaxWidth()
                 )
-                
                 ExposedDropdownMenu(
                     expanded = planExpanded,
                     onDismissRequest = { planExpanded = false }
@@ -106,7 +140,7 @@ fun FamilyFormScreen(
                     }
                 }
             }
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -118,13 +152,13 @@ fun FamilyFormScreen(
                     onCheckedChange = { isActive = it }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
                 onClick = { onSave(name, plan, isActive) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = name.isNotBlank()
+                enabled = canSave
             ) {
                 Text(if (isEditing) "Guardar Cambios" else "Crear Familia")
             }

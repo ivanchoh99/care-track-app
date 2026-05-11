@@ -183,7 +183,7 @@ fun AppNavigation(
                 PatientFormScreen(
                     patientId = null,
                     onNavigateBack = { navController.popBackStack() },
-                    onSave = { _, _, _, _, _, _, _, _, _, _ -> navController.popBackStack() }
+                    onSave = { _, _, _, _, _, _, _, _, _, _, _ -> navController.popBackStack() }
                 )
             }
 
@@ -192,7 +192,7 @@ fun AppNavigation(
                 PatientFormScreen(
                     patientId = id,
                     onNavigateBack = { navController.popBackStack() },
-                    onSave = { _, _, _, _, _, _, _, _, _, _ -> navController.popBackStack() }
+                    onSave = { _, _, _, _, _, _, _, _, _, _, _ -> navController.popBackStack() }
                 )
             }
 
