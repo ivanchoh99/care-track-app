@@ -51,9 +51,8 @@ actual class TokenStore {
         store.edit { it.clear() }
     }
     
-    actual val accessToken: Flow<String?> = store.data.map { prefs ->
-        prefs[ACCESS_TOKEN_KEY]
-    }
+    actual val accessToken: Flow<String?>
+        get() = store.data.map { prefs -> prefs[ACCESS_TOKEN_KEY] }
 }
 
 actual fun createTokenStore(): TokenStore = TokenStore()

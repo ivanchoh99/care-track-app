@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 interface AuthRepository {
     val session: StateFlow<UserSession?>
     val isLoggedIn: Boolean
-    
-    suspend fun login(telegramId: Long): Result<UserSession>
+
+    suspend fun login(email: String, password: String): Result<UserSession>
+    suspend fun register(name: String, email: String, password: String, invitationCode: String?): Result<UserSession>
     suspend fun logout()
     suspend fun refreshToken(): Result<AuthTokens>
     suspend fun restoreSession(): Boolean
@@ -26,9 +27,13 @@ class AuthRepositoryImpl(
     override val session: StateFlow<UserSession?> = sessionManager.session
     override val isLoggedIn: Boolean get() = sessionManager.isLoggedIn
     
-    override suspend fun login(telegramId: Long): Result<UserSession> {
+    override suspend fun register(name: String, email: String, password: String, invitationCode: String?): Result<UserSession> {
+        return Result.failure(NotImplementedError("register not implemented in real backend yet"))
+    }
+
+    override suspend fun login(email: String, password: String): Result<UserSession> {
         return try {
-            val loginResult = apiService.login(LoginRequest(telegramId))
+            val loginResult = apiService.login(LoginRequest(email, password))
             loginResult.fold(
                 onSuccess = { response ->
                     val userSession = UserSession(

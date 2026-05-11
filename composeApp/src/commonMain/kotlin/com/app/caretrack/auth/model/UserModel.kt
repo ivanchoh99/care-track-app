@@ -50,7 +50,8 @@ data class UserSession(
 )
 
 data class LoginRequest(
-    val telegramId: Long
+    val email: String,
+    val password: String
 )
 
 data class AuthResponse(

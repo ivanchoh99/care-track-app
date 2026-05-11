@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -78,6 +79,7 @@ fun ChatScreen(
     var hasAudioPermission by remember { mutableStateOf(false) }
     var isRecordingRequested by remember { mutableStateOf(false) }
     var isRecording by remember { mutableStateOf(false) }
+    var currentlyPlayingId by remember { mutableStateOf<String?>(null) }
 
     val permissionLauncher = rememberPermissionLauncher(
         onResult = { isGranted ->
@@ -157,7 +159,7 @@ fun ChatScreen(
 
     Surface(modifier = modifier.fillMaxSize()) {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().imePadding(),
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             bottomBar = {
                 ChatInputBar(
@@ -228,6 +230,14 @@ fun ChatScreen(
                 }
                 is UiState.Success -> {
                     val messages = state.data
+
+                    // Auto-scroll al último mensaje cuando llega uno nuevo (usuario o bot)
+                    LaunchedEffect(messages.size) {
+                        if (messages.isNotEmpty()) {
+                            listState.animateScrollToItem(messages.size - 1)
+                        }
+                    }
+
                     if (messages.isEmpty()) {
                         Box(
                             modifier = Modifier
@@ -253,7 +263,9 @@ fun ChatScreen(
                             items(messages, key = { it.id }) { message ->
                                 MessageItem(
                                     message = message,
-                                    player = player
+                                    player = player,
+                                    currentlyPlayingId = currentlyPlayingId,
+                                    onPlayingChanged = { id -> currentlyPlayingId = id }
                                 )
                             }
                         }

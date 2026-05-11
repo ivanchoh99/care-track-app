@@ -370,7 +370,6 @@ fun App(repository: ChatRepository) {
                                     MessageItem(
                                         message = message,
                                         player = player,
-                                        onDelete = { chatViewModel.deleteMessage(it) },
                                         onRetry = { chatViewModel.retryMessage(it) }
                                     )
                                 }

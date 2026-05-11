@@ -30,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,10 +45,12 @@ fun InviteScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val clipboardManager = LocalClipboardManager.current
     var selectedRole by remember { mutableStateOf(Role.CAREGIVER) }
     var roleExpanded by remember { mutableStateOf(false) }
     var generatedCode by remember { mutableStateOf<String?>(null) }
     var invitationLink by remember { mutableStateOf<String?>(null) }
+    var codeCopied by remember { mutableStateOf(false) }
     
     val availableRoles = listOf(Role.CAREGIVER, Role.VIEWER)
     
@@ -131,9 +135,9 @@ fun InviteScreen(
             if (generatedCode == null) {
                 Button(
                     onClick = {
-                        // Simulate generating invitation code
                         generatedCode = UUID.randomUUID().toString()
                         invitationLink = "caretrack://invite/$generatedCode"
+                        codeCopied = false
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -175,6 +179,18 @@ fun InviteScreen(
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                clipboardManager.setText(AnnotatedString(generatedCode!!))
+                                codeCopied = true
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(if (codeCopied) "¡Copiado!" else "Copiar código")
+                        }
                     }
                 }
                 

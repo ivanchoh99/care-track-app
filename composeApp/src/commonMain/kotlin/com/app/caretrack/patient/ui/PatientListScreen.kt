@@ -15,55 +15,34 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.app.caretrack.patient.model.Gender
+import com.app.caretrack.common.mock.MockData
+import com.app.caretrack.family.data.FamilyContext
 import com.app.caretrack.patient.model.PatientModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PatientListScreen(
+    familyContext: FamilyContext,
     onNavigateToCreate: () -> Unit,
     onNavigateToEdit: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var patients by remember { 
-        mutableStateOf(listOf(
-            PatientModel(
-                id = 1, uuid = "uuid-1", 
-                typeDocument = com.app.caretrack.auth.model.TypeDocument.CITIZEN_DOCUMENT,
-                document = "12345678", gender = Gender.MALE, familyId = 1,
-                firstName = "Juan", lastName = "Pérez", phone = 3001234567,
-                email = "juan@example.com", dateBirth = 946684800000, 
-                bloodType = "O+", allergies = listOf("Penicilina"), isActive = true
-            ),
-            PatientModel(
-                id = 2, uuid = "uuid-2",
-                typeDocument = com.app.caretrack.auth.model.TypeDocument.PASSPORT,
-                document = "AB123456", gender = Gender.FEMALE, familyId = 1,
-                firstName = "María", lastName = "García", phone = 3007654321,
-                email = "maria@example.com", dateBirth = 978307200000,
-                bloodType = "A+", allergies = emptyList(), isActive = true
-            )
-        ))
-    }
-    
+    val selectedFamilyId by familyContext.selectedFamilyId.collectAsState()
+    val patients = selectedFamilyId?.let { MockData.patientsForFamily(it) } ?: emptyList()
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Pacientes") }
-            )
+            TopAppBar(title = { Text("Pacientes") })
         },
         modifier = modifier
     ) { paddingValues ->
@@ -76,7 +55,7 @@ fun PatientListScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "No hay pacientes",
+                    text = "No hay pacientes registrados",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -89,7 +68,7 @@ fun PatientListScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(patients) { patient ->
+                items(patients, key = { it.id }) { patient ->
                     PatientListCard(
                         patient = patient,
                         onClick = { onNavigateToEdit(patient.id) }

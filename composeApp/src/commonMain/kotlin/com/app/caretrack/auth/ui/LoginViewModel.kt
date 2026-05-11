@@ -22,12 +22,10 @@ class LoginViewModel(
     private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
     
-    fun login(telegramId: Long) {
+    fun login(email: String, password: String) {
         viewModelScope.launch {
             _uiState.value = LoginUiState.Loading
-            
-            val result = authRepository.login(telegramId)
-            
+            val result = authRepository.login(email, password)
             _uiState.value = result.fold(
                 onSuccess = { LoginUiState.Success },
                 onFailure = { LoginUiState.Error(it.message ?: "Error al iniciar sesión") }

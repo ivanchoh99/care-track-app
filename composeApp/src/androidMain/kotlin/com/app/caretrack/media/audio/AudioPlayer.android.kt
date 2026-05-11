@@ -80,23 +80,31 @@ actual class AudioPlayer actual constructor(context: Any?) {
             }
 
             if (file.exists()) {
-                // Crear MediaPlayer con el patrón apply{} de Kotlin:
-                // ejecuta el bloque sobre el objeto recién creado y devuelve el objeto.
-                // Es equivalente a: val mp = MediaPlayer(); mp.setDataSource(...); ...
-                mediaPlayer = MediaPlayer().apply {
+                // Crear el nuevo MediaPlayer y asignarlo ANTES del listener.
+                // Esto permite que onPreparedListener verifique si sigue siendo el reproductor
+                // activo (guard contra la race condition de prepareAsync).
+                val newPlayer = MediaPlayer()
+                mediaPlayer = newPlayer
+
+                newPlayer.apply {
                     setDataSource(file.absolutePath)
 
-                    // prepareAsync() carga el archivo en un hilo de fondo.
-                    // Cuando está listo, llama a onPrepared. NUNCA bloquea la UI.
-                    setOnPreparedListener {
-                        AppLogger.d("AudioPlayer", "MediaPlayer preparado, iniciando reproducción")
-                        start()  // Inicia la reproducción cuando el archivo está listo
+                    // Guard: solo inicia si este MediaPlayer sigue siendo el activo.
+                    // Si stopAudio() fue llamado entre prepareAsync() y onPrepared,
+                    // mediaPlayer será null o un nuevo objeto → no iniciar.
+                    setOnPreparedListener { mp ->
+                        if (mediaPlayer === mp) {
+                            AppLogger.d("AudioPlayer", "MediaPlayer preparado, iniciando reproducción")
+                            mp.start()
+                        } else {
+                            AppLogger.d("AudioPlayer", "MediaPlayer reemplazado, cancelando inicio")
+                            mp.release()
+                        }
                     }
 
-                    // Se llama automáticamente cuando el audio termina
                     setOnCompletionListener {
                         AppLogger.d("AudioPlayer", "Reproducción completada")
-                        stopAudio()  // Libera recursos al terminar
+                        stopAudio()
                     }
 
                     // Se llama si ocurre un error durante la reproducción

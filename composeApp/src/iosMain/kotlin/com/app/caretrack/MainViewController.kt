@@ -3,7 +3,7 @@ package com.app.caretrack
 import androidx.compose.runtime.remember
 import androidx.compose.ui.window.ComposeUIViewController
 import com.app.caretrack.chat.ChatRepository
-import com.app.caretrack.chat.FileStorageManager       // ⚠️ Import de paquete incorrecto
+import com.app.caretrack.media.file.FileStorageManager
 import com.app.caretrack.chat.getRoomDatabase
 import com.app.caretrack.chat.instantiateDatabaseBuilder
 

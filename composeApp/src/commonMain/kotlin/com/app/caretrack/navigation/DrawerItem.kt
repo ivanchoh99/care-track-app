@@ -71,7 +71,7 @@ sealed class DrawerItem(
 
         fun isVisibleForRole(item: DrawerItem, activeRole: Role?): Boolean {
             if (activeRole == null) {
-                return item in listOf(Chat, Profile)
+                return item in listOf(Chat, Profile, SwitchFamily)
             }
             return activeRole in item.roles
         }

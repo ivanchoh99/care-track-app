@@ -1,10 +1,15 @@
 package com.app.caretrack.navigation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -14,28 +19,36 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import caretrack.composeapp.generated.resources.Res
+import caretrack.composeapp.generated.resources.menu_24px
 import com.app.caretrack.auth.model.Role
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
-    navController: NavController,
     currentRoute: String?,
     activeRole: Role?,
     familyCount: Int,
     familyName: String?,
+    onNavigate: (String) -> Unit,
     onLogout: () -> Unit,
     content: @Composable () -> Unit
 ) {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
     val menuItems = remember(activeRole, familyCount) {
         DrawerItem.buildMenuItems(activeRole, familyCount)
     }
@@ -47,9 +60,10 @@ fun AppScaffold(
     }
 
     ModalNavigationDrawer(
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
-                modifier = Modifier.fillMaxSize(0.85f)
+                modifier = Modifier.fillMaxHeight().fillMaxWidth(0.85f)
             ) {
                 Column(
                     modifier = Modifier
@@ -69,7 +83,7 @@ fun AppScaffold(
                             text = "Familia: $it",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(bottom = 16.dp)
+                            modifier = Modifier.padding(bottom = 8.dp)
                         )
                     }
 
@@ -85,32 +99,36 @@ fun AppScaffold(
                     HorizontalDivider()
 
                     menuItems.forEachIndexed { index, item ->
-                        val isVisible = DrawerItem.isVisibleForRole(item, activeRole)
-                        if (isVisible) {
+                        if (DrawerItem.isVisibleForRole(item, activeRole)) {
                             NavigationDrawerItem(
                                 label = { Text(item.title) },
                                 selected = selectedItemIndex == index,
                                 onClick = {
                                     selectedItemIndex = index
+                                    scope.launch { drawerState.close() }
                                     if (currentRoute != item.route) {
-                                        navController.navigate(item.route) {
-                                            popUpTo(Screen.Chat.route) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
-                                            restoreState = true
-                                        }
+                                        onNavigate(item.route)
                                     }
                                 },
                                 colors = NavigationDrawerItemDefaults.colors(
                                     selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer
                                 ),
                                 modifier = Modifier.padding(vertical = 4.dp)
                             )
                         }
                     }
+
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    NavigationDrawerItem(
+                        label = { Text("Cerrar sesión", color = MaterialTheme.colorScheme.error) },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            onLogout()
+                        },
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
                 }
             }
         },
@@ -123,6 +141,14 @@ fun AppScaffold(
                                 text = menuItems.getOrNull(selectedItemIndex)?.title ?: "CareTrack",
                                 fontWeight = FontWeight.SemiBold
                             )
+                        },
+                        navigationIcon = {
+                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.menu_24px),
+                                    contentDescription = "Abrir menú"
+                                )
+                            }
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = MaterialTheme.colorScheme.surface,

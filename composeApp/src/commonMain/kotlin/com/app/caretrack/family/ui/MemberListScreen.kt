@@ -20,55 +20,30 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.app.caretrack.auth.model.Role
+import com.app.caretrack.common.mock.MockData
+import com.app.caretrack.family.data.FamilyContext
 import com.app.caretrack.family.model.FamilyMemberModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MemberListScreen(
+    familyContext: FamilyContext,
     onNavigateToEdit: (Long) -> Unit,
     onNavigateToInvite: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Demo members - in real app would come from repository
-    var members by remember {
-        mutableStateOf(listOf(
-            FamilyMemberModel(
-                userId = 1,
-                familyId = 1,
-                role = Role.FAMILY_ADMIN,
-                userFirstName = "Carlos",
-                userLastName = "Rodríguez"
-            ),
-            FamilyMemberModel(
-                userId = 2,
-                familyId = 1,
-                role = Role.CAREGIVER,
-                userFirstName = "Ana",
-                userLastName = "García"
-            ),
-            FamilyMemberModel(
-                userId = 3,
-                familyId = 1,
-                role = Role.VIEWER,
-                userFirstName = "Pedro",
-                userLastName = "Martínez"
-            )
-        ))
-    }
-    
+    val selectedFamilyId by familyContext.selectedFamilyId.collectAsState()
+    val members = selectedFamilyId?.let { MockData.membersForFamily(it) } ?: emptyList()
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Miembros de la Familia") }
-            )
+            TopAppBar(title = { Text("Miembros de la Familia") })
         },
         modifier = modifier
     ) { paddingValues ->
@@ -85,9 +60,9 @@ fun MemberListScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Usa 'Invitar Miembro' para agregar",
+                    text = "Usa 'Invitar Miembro' para agregar personas",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -100,7 +75,7 @@ fun MemberListScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(members) { member ->
+                items(members, key = { it.userId }) { member ->
                     MemberListCard(
                         member = member,
                         onClick = { onNavigateToEdit(member.userId) }
@@ -141,14 +116,14 @@ private fun MemberListCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Text(
                 text = member.role.label,
                 style = MaterialTheme.typography.labelLarge,
                 color = when (member.role) {
                     Role.FAMILY_ADMIN -> MaterialTheme.colorScheme.primary
-                    Role.CAREGIVER -> MaterialTheme.colorScheme.tertiary
-                    Role.VIEWER -> MaterialTheme.colorScheme.onSurfaceVariant
+                    Role.CAREGIVER    -> MaterialTheme.colorScheme.tertiary
+                    Role.VIEWER       -> MaterialTheme.colorScheme.onSurfaceVariant
                     Role.SYSTEM_ADMIN -> MaterialTheme.colorScheme.error
                 }
             )
